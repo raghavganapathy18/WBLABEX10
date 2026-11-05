@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craft.co — A Store that is built by Hands</title>
+<style>
+  :root{
+    --pink-bg: #fbdff0;
+    --pink-bg-2: #f6d3ea;
+    --ink: #1a1a1a;
+    --white: #ffffff;
+    --border: #1a1a1a;
+    --btn-blue: #aab8ea;
+    --btn-blue-dark: #8fa0e0;
+    --slider-red: #e0384c;
+    --muted: #6b6b6b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--pink-bg);
+    color: var(--ink);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 40px;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* ---------- Nav dropdown ---------- */
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+  }
+
+  .nav-item > a::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+    margin-top: -4px;
+  }
+
+  .nav-item:hover > a,
+  .nav-item.open > a {
+    color: #c23b7a;
+  }
+
+  .dropdown-menu {
+    display: none;
+    list-style: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    padding: 8px;
+    min-width: 190px;
+    z-index: 30;
+    margin: 0;
+  }
+
+  .nav-item:hover .dropdown-menu,
+  .nav-item.open .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu li a {
+    display: block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu li a:hover {
+    background: var(--pink-bg-2);
+    color: #c23b7a;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    padding: 30px 20px 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .hero h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    margin: 10px 0 0;
+  }
+
+  /* ---------- Product grid ---------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    padding: 20px 40px 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Get Yours Customised ---------- */
+  .customise-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 60px 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .customise-section h2 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    flex: 1 1 300px;
+  }
+
+  table.price-table {
+    border-collapse: collapse;
+    background: var(--pink-bg-2);
+    flex: 1 1 400px;
+    max-width: 480px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  table.price-table th, table.price-table td {
+    border: 1px solid rgba(0,0,0,0.35);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  table.price-table th {
+    font-weight: 700;
+    background: var(--pink-bg-2);
+  }
+
+  .order-like {
+    text-align: center;
+    padding: 30px 20px 10px;
+    font-size: 1.1rem;
+  }
+
+  /* ---------- Form ---------- */
+  .form-wrapper {
+    max-width: 1120px;
+    margin: 20px auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--pink-bg);
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 26px;
+  }
+
+  .field {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field label, fieldset legend, .group-label {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field input[type="date"],
+  .field select {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    background: var(--pink-bg);
+    color: var(--ink);
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .field input::placeholder { color: rgba(0,0,0,0.45); }
+
+  .field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10'%3E%3Cpath d='M1 1l6 7 6-7' stroke='%23000' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+  }
+
+  .file-field {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 8px 8px 8px 8px;
+  }
+
+  .file-field .choose-btn {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 20px;
+    padding: 8px 18px;
+    background: var(--white);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .file-field .file-name {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .checkbox-group, .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    align-items: center;
+  }
+
+  .checkbox-group label, .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--ink);
+  }
+
+  .radio-group input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink);
+  }
+
+  textarea {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 16px;
+    padding: 16px 18px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--pink-bg);
+    resize: vertical;
+    min-height: 130px;
+    width: 100%;
+  }
+
+  .rate-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--slider-red) 0%, var(--slider-red) 50%, #f2c7de 50%, #f2c7de 100%);
+    outline: none;
+  }
+
+  .rate-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .rate-slider::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .submit-btn-wrap {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .submit-btn {
+    background: var(--btn-blue);
+    border: none;
+    padding: 16px 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    background: var(--btn-blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .submit-btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #333;
+    outline-offset: 2px;
+  }
+
+  /* ---------- Sign In / Sign Up ---------- */
+  .auth-section {
+    background:
+      linear-gradient(rgba(60, 20, 45, 0.35), rgba(60, 20, 45, 0.35)),
+      url("https://images.unsplash.com/photo-1528812969535-4bcefadbb26f?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    padding: 70px 40px;
+  }
+
+  .auth-section h2 {
+    text-align: center;
+    color: var(--white);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  }
+
+  .auth-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 44px;
+    flex-wrap: wrap;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .auth-box {
+    background: var(--white);
+    width: 100%;
+    max-width: 330px;
+    padding: 32px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
+
+  .auth-box h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 22px;
+  }
+
+  .auth-box label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .auth-box input[type="text"],
+  .auth-box input[type="email"],
+  .auth-box input[type="password"] {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #faf7f9;
+  }
+
+  .auth-box input:focus {
+    outline: none;
+    border-color: #c23b7a;
+    background: var(--white);
+  }
+
+  .auth-box .auth-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--btn-blue);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .auth-box .auth-submit:hover {
+    background: var(--btn-blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .auth-switch {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 14px;
+    color: var(--muted);
+  }
+
+  .auth-switch a {
+    color: #c23b7a;
+    font-weight: 600;
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .testimonials-wrapper h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 34px;
+  }
+
+  .video-card {
+    max-width: 640px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #333;
+    overflow: hidden;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-thumb .duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .caption {
+    text-align: center;
+    font-weight: 600;
+    margin: 16px 0 26px;
+  }
+
+  .audio-player {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #4a4a4a;
+    border-radius: 30px;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+  }
+
+  .audio-player .play-btn {
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #fff;
+    cursor: pointer;
+  }
+
+  .audio-player .track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .audio-player .track::after {
+    content: "";
+    position: absolute;
+    left: 0; top: -3px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .audio-player .time {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .audio-caption {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  /* ---------- Location ---------- */
+  .location-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 40px;
+    padding: 28px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .location-wrapper h2 {
+    text-align: center;
+    text-transform: lowercase;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 20px;
+  }
+
+  .map-frame {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 24px 40px 40px;
+    font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer p { margin: 2px 0; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-wrapper, .testimonials-wrapper, .location-wrapper { margin-left: 20px; margin-right: 20px; padding: 28px; }
+    header, .customise-section, .product-grid, footer { padding-left: 20px; padding-right: 20px; }
+  }
+
+  @media (max-width: 700px) {
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 68px;
+      right: 20px;
+      left: 20px;
+      background: var(--pink-bg-2);
+      flex-direction: column;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      z-index: 20;
+    }
+    nav ul.open { display: flex; }
+    nav ul li { width: 100%; }
+    nav ul a { display: block; padding: 14px 20px; }
+    .nav-toggle { display: block; }
+    header { position: relative; padding: 20px; }
+
+    .nav-item > a::after { margin-left: auto; margin-top: 0; }
+    .dropdown-menu {
+      display: none;
+      position: static;
+      transform: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: var(--pink-bg);
+      padding: 0 0 0 20px;
+      min-width: 0;
+    }
+    .nav-item.open .dropdown-menu { display: block; }
+    .nav-item:hover .dropdown-menu { display: none; }
+    .nav-item.open:hover .dropdown-menu { display: block; }
+  }
+
+  @media (max-width: 560px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .form-row { gap: 20px; }
+    .form-wrapper { padding: 22px; border-radius: 14px; }
+    .checkbox-group, .radio-group { gap: 16px; }
+    .submit-btn { padding: 14px 44px; width: 100%; }
+    footer { flex-direction: column; align-items: flex-start; }
+    table.price-table th, table.price-table td { padding: 10px 10px; font-size: 0.85rem; }
+    .auth-section { padding: 50px 20px; }
+    .auth-boxes { gap: 26px; }
+    .auth-box { max-width: 100%; padding: 26px 22px; }
+  }
+
+  /* ---------- Craft Tools (JS DOM & events) ---------- */
+  .tools-section { max-width: 1120px; margin: 0 auto 60px; padding: 0 40px; }
+  .tools-section > h2 { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 0 0 8px; }
+  .tools-intro { text-align: center; margin: 0 auto 30px; max-width: 560px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .tool-card { border: 2px solid var(--border); border-radius: 18px; padding: 26px; background: var(--pink-bg); }
+  .tool-card.wide { grid-column: 1 / -1; }
+  .tool-card h3 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 800; }
+  .tool-card .hint { margin: 0 0 16px; font-size: 0.9rem; color: var(--muted); }
+  .tool-card fieldset { border: none; padding: 0; margin: 0; }
+  .tool-card label { display: block; font-size: 0.95rem; font-weight: 500; margin: 0 0 6px; }
+  .tool-card input[type="text"], .tool-card select {
+    width: 100%; border: 1px solid rgba(0,0,0,0.5); border-radius: 30px; padding: 10px 16px;
+    font-size: 1rem; font-family: inherit; background: var(--pink-bg); color: var(--ink); margin-bottom: 12px;
+  }
+  .tool-card .inline { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .tool-card .inline select, .tool-card .inline input[type="text"] { width: auto; flex: 1 1 110px; margin-bottom: 0; }
+  .tool-btn {
+    background: var(--btn-blue); border: none; padding: 11px 26px; font-size: 1rem; font-weight: 600;
+    border-radius: 30px; cursor: pointer; color: var(--ink); font-family: inherit;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .tool-btn:hover { background: var(--btn-blue-dark); transform: translateY(-1px); }
+  .tool-card .result { margin: 14px 0 0; font-size: 1rem; line-height: 1.6; }
+  .tool-card .result span { font-weight: 700; }
+  .tool-card .radio-line { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+  .tool-card .radio-line label { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 0; cursor: pointer; }
+  .tool-card .radio-line input { accent-color: var(--ink); }
+  .tool-card .error { color: #b3182e; font-size: 0.9rem; min-height: 1.2em; margin: 8px 0 0; }
+
+  #garden { display: grid; gap: 4px; margin-top: 14px; }
+  #garden img { width: 100%; max-width: 44px; aspect-ratio: 1; object-fit: contain; background: var(--white); border-radius: 6px; }
+  #coin { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 14px; background: var(--white); border: 2px solid var(--ink); }
+  .coin-wrap { text-align: center; }
+
+  .events-table-wrap { max-height: 260px; overflow: auto; border: 1px solid rgba(0,0,0,0.35); border-radius: 8px; margin-top: 10px; }
+  .events-table-wrap table { border-collapse: collapse; width: 100%; background: var(--pink-bg-2); }
+  .events-table-wrap th, .events-table-wrap td { border: 1px solid rgba(0,0,0,0.25); padding: 8px 12px; text-align: left; font-size: 0.9rem; }
+  .events-table-wrap th { position: sticky; top: 0; background: var(--pink-bg-2); }
+
+  .playground-box {
+    border: 2px dashed var(--ink); border-radius: 14px; padding: 26px 16px; text-align: center;
+    background: var(--white); cursor: pointer; user-select: none; margin-bottom: 12px;
+  }
+  .playground-box.hover { background: var(--pink-bg-2); }
+  #eventLog { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; min-height: 7.5em; }
+  #eventLog li { padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.12); }
+  .dom-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+  .hl { outline: 4px solid var(--slider-red) !important; outline-offset: 3px; transition: outline 0.2s ease; }
+
+  @media (max-width: 900px) { .tools-section { padding: 0 20px; } }
+  @media (max-width: 560px) { .tool-card { padding: 20px; } }
+
+  /* ---------- Live bar, toasts ---------- */
+  .topbar {
+    background: var(--ink); color: var(--white); text-align: center;
+    padding: 8px 20px; font-size: 0.85rem; font-variant-numeric: tabular-nums;
+  }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); z-index: 50;
+    background: var(--ink); color: var(--white); padding: 12px 20px; border-radius: 30px;
+    font-size: 0.95rem; box-shadow: 0 8px 20px rgba(0,0,0,0.25); max-width: calc(100% - 32px);
+  }
+  #orderToast { bottom: 24px; display: none; }
+  #offerBar { bottom: 24px; display: none; align-items: center; gap: 14px; border-radius: 16px; }
+  #offerBar a { text-decoration: underline; font-weight: 600; }
+  #offerBar button { background: none; border: 1px solid rgba(255,255,255,0.6); color: var(--white); border-radius: 20px; padding: 4px 12px; cursor: pointer; font-family: inherit; }
+
+  /* ---------- Studio Live ---------- */
+  .studio-section { max-width: 1120px; margin: 0 auto 60px; padding: 0 40px; }
+  .studio-section > h2 { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 0 0 8px; }
+  .date-table { width: 100%; border-collapse: collapse; background: var(--pink-bg-2); font-size: 0.88rem; }
+  .date-table th, .date-table td { border: 1px solid rgba(0,0,0,0.25); padding: 6px 10px; text-align: left; vertical-align: top; }
+  .date-table td:last-child { word-break: break-word; font-variant-numeric: tabular-nums; }
+  .date-scroll { max-height: 330px; overflow: auto; border-radius: 8px; border: 1px solid rgba(0,0,0,0.35); }
+  .date-table th { position: sticky; top: 0; background: var(--pink-bg-2); }
+
+  .tool-card .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .tool-btn.ghost { background: var(--white); border: 1px solid var(--ink); }
+  .tool-btn.ghost:hover { background: var(--pink-bg-2); }
+  .tool-card input[type="range"] { width: 100%; accent-color: var(--slider-red); margin-bottom: 12px; }
+
+  .banner-stage { border: 1px dashed rgba(0,0,0,0.5); border-radius: 12px; padding: 16px; background: var(--white); min-height: 90px; display: flex; align-items: center; justify-content: center; }
+  #bannerPreview { padding: 10px 22px; border-radius: 10px; font-weight: 700; text-align: center; overflow-wrap: anywhere; }
+
+  #careTips { background: var(--white); border-radius: 12px; padding: 14px 16px; margin: 0 0 12px; line-height: 1.55; }
+
+  .parcel-track { position: relative; width: 100%; height: 64px; background: var(--white); border: 1px solid rgba(0,0,0,0.35); border-radius: 12px; margin-bottom: 8px; overflow: hidden; }
+  .parcel-track::after { content: ""; position: absolute; left: 0; right: 0; bottom: 10px; border-bottom: 2px dashed rgba(0,0,0,0.3); }
+  #parcel { position: absolute; left: 0; top: 8px; width: 48px; height: 40px; background: #d9a066; border: 2px solid var(--ink); border-radius: 6px; }
+  #parcel::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 6px; margin-left: -3px; background: var(--slider-red); }
+  .track-labels { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+
+  .countdown { font-size: 2.4rem; font-weight: 800; font-variant-numeric: tabular-nums; margin: 4px 0 12px; }
+
+  .timer-table { width: 100%; border-collapse: collapse; background: var(--pink-bg-2); font-size: 0.9rem; }
+  .timer-table th, .timer-table td { border: 1px solid rgba(0,0,0,0.25); padding: 8px 12px; text-align: left; }
+  .timer-wrap { overflow-x: auto; border-radius: 8px; }
+
+  @media (max-width: 900px) { .studio-section { padding: 0 20px; } }
+
+  /* ---------- Craft Workshop (jQuery) ---------- */
+  .workshop-section { max-width: 1120px; margin: 0 auto 60px; padding: 0 40px; }
+  .workshop-section > h2 { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 0 0 8px; }
+  .pct-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px 18px; margin-bottom: 14px; }
+  .pct-grid input[type="text"] { margin-bottom: 0; }
+  .budget-boxes { display: none; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 16px; }
+  .budget-box { color: var(--white); border-radius: 10px; padding: 14px; font-weight: 600; line-height: 1.5; }
+  .budget-box strong { display: block; font-size: 1.15rem; }
+  #outMaterials { background: #3d5afe; }
+  #outAccessories { background: #1f9d55; }
+  #outPackaging { background: #7b61ff; }
+  #outSavings { background: #e0368a; }
+
+  .shop-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 14px; }
+  .shop-item { text-align: center; }
+  .shop-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; margin-bottom: 8px; background: var(--white); }
+  .shop-item .cap { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+  .shop-item input[type="text"] { margin-bottom: 0; text-align: center; }
+
+  #billBox { display: none; margin-top: 18px; border-top: 3px solid var(--btn-blue); padding-top: 14px; }
+  #billBox h4 { margin: 0 0 12px; text-align: center; font-size: 1.3rem; color: #1f7a3a; }
+  .bill-lines { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 0.92rem; }
+  .bill-lines td { border-bottom: 1px solid rgba(0,0,0,0.2); padding: 6px 4px; }
+  .bill-lines td:last-child { text-align: right; }
+  .bill-total { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .bill-total .label { background: #1f9d55; color: var(--white); font-weight: 700; font-size: 1.3rem; padding: 6px 28px; border-radius: 4px; flex: 1 1 180px; text-align: center; }
+  .bill-total .amount { color: #c8202f; font-weight: 800; font-size: 1.5rem; }
+
+  .bag-stage { position: relative; width: 260px; height: 220px; margin: 0 auto 16px; max-width: 100%; }
+  #bagHandle { position: absolute; left: 85px; top: 22px; width: 90px; height: 60px; border: 9px solid #1a1a1a; border-bottom: none; border-radius: 60px 60px 0 0; }
+  #bagBody { position: absolute; left: 30px; top: 70px; width: 200px; height: 130px; border-radius: 10px; background: #f27fb5; border: 2px solid var(--ink); }
+  #bagTrim { position: absolute; left: 30px; top: 70px; width: 200px; height: 44px; border-radius: 10px 10px 44px 44px; background: #1a1a1a; border: 2px solid var(--ink); }
+  .bag-button { position: absolute; top: 114px; width: 24px; height: 24px; border-radius: 50%; background: #fff3a3; border: 2px solid var(--ink); transform: translate(-50%, -50%); }
+  #bagBtnL { left: 100px; }
+  #bagBtnR { left: 160px; }
+
+  .adder-box { background: #2b4acb; color: var(--white); border-radius: 8px; padding: 10px 14px; min-height: 42px; margin-top: 12px; }
+  .tip-list p { background: var(--white); border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; cursor: pointer; }
+  .tip-list p:hover { background: var(--pink-bg-2); }
+
+  @media (max-width: 900px) { .workshop-section { padding: 0 20px; } }
+
+  /* ---------- React app link ---------- */
+  .react-section { max-width: 1120px; margin: 0 auto 60px; padding: 0 40px; }
+  .react-section > h2 { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 0 0 8px; }
+  .react-cta { text-align: center; }
+  .react-cta .tool-btn { display: inline-block; margin: 6px 6px 0; }
+  @media (max-width: 900px) { .react-section { padding: 0 20px; } }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="liveBar" aria-live="off">Open for custom orders</div>
+
+<header>
+  <div class="logo">CRAFT.CO</div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+  <nav>
+    <ul id="navMenu">
+      <li class="nav-item">
+        <a href="#home">Home</a>
+        <ul class="dropdown-menu">
+          <li><a href="#home">New Arrivals</a></li>
+          <li><a href="#orders">Best Sellers</a></li>
+          <li><a href="#orders">Custom Orders</a></li>
+          <li><a href="#about">Gift Sets</a></li>
+        </ul>
+      </li>
+      <li><a href="#orders">Orders</a></li>
+      <li class="nav-item">
+        <a href="#tools">Explore</a>
+        <ul class="dropdown-menu">
+          <li><a href="#tools">Craft Tools</a></li>
+          <li><a href="#studio">Studio Live</a></li>
+          <li><a href="#workshop">Craft Workshop</a></li>
+          <li><a href="#join">Join Craft.co</a></li>
+        </ul>
+      </li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#auth">Sign In</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>A Store</h1>
+  <h2>that is built by Hands</h2>
+</section>
+
+<section class="product-grid">
+  <div class="product-card"><img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=400&h=400&fit=crop" alt="Crochet keychain"></div>
+  <div class="product-card"><img src="https://images.unsplash.com/photo-1622560480605-d83c853bc935?w=400&h=400&fit=crop" alt="Crochet backpack"></div>
+  <div class="product-card"><img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=400&h=400&fit=crop" alt="Handmade sweater"></div>
+  <div class="product-card"><img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&h=400&fit=crop" alt="Crochet bunny toy"></div>
+</section>
+
+<section class="customise-section" id="orders">
+  <h2>Get Yours<br>Customised</h2>
+  <table class="price-table">
+    <thead>
+      <tr><th>Sno</th><th>Product</th><th>Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Customised Photo Frame Large</td><td>&#8377; 599</td></tr>
+      <tr><td>2</td><td>Customised Photo Frame Medium</td><td>&#8377; 199</td></tr>
+      <tr><td>3</td><td>Customised Photo Frame Small</td><td>&#8377; 99</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<p class="order-like">Or Order As You Like Below</p>
+
+<form class="form-wrapper" id="orderForm">
+  <div class="form-row">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="field">
+      <label for="phone">Phone No</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="" selected disabled>Select Category</option>
+        <option value="photo-frame">Photo Frame</option>
+        <option value="keychain">Keychain</option>
+        <option value="bag">Bag</option>
+        <option value="apparel">Apparel</option>
+        <option value="soft-toy">Soft Toy</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field">
+      <label for="expected-date">Expected Date</label>
+      <input type="date" id="expected-date" name="expected-date">
+    </div>
+    <div class="field">
+      <label for="reference-image">Reference Image</label>
+      <div class="file-field">
+        <label class="choose-btn" for="reference-image">Choose File</label>
+        <span class="file-name" id="fileName">No file selected</span>
+        <input type="file" id="reference-image" name="reference-image" accept="image/*" style="display:none;">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <fieldset style="flex-basis:100%; border:none; padding:0; margin:0;">
+      <legend class="group-label">How do you get to know about Craft.co ?</legend>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="source" value="TV"> TV</label>
+        <label><input type="checkbox" name="source" value="Magazine"> Magazine</label>
+        <label><input type="checkbox" name="source" value="Social"> Social</label>
+        <label><input type="checkbox" name="source" value="Friends"> Friends</label>
+        <label><input type="checkbox" name="source" value="Others"> Others</label>
+        <label><input type="checkbox" name="source" value="Connection"> Connection</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset style="flex-basis:100%; border:none; padding:0; margin:0;">
+      <legend class="group-label">Mode of Payment</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+        <label><input type="radio" name="payment" value="Card"> Debit / Credit Card</label>
+        <label><input type="radio" name="payment" value="Netbanking"> Netbanking</label>
+        <label><input type="radio" name="payment" value="UPI"> UPI</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="feedback">Feedback</label>
+      <textarea id="feedback" name="feedback"></textarea>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="rate">Rate Us</label>
+      <input type="range" id="rate" name="rate" class="rate-slider" min="1" max="10" value="5">
+    </div>
+  </div>
+
+  <div class="submit-btn-wrap">
+    <button type="submit" class="submit-btn">Submit</button>
+  </div>
+</form>
+
+<section class="tools-section" id="tools">
+  <h2>Craft Tools</h2>
+  <p class="tools-intro">Plan your handmade order before you place it: write a gift message, find your size, design a blanket and price your frames.</p>
+
+  <div class="tool-grid">
+
+    <div class="tool-card">
+      <h3>Gift message checker</h3>
+      <p class="hint">Writing a message for a keychain or photo frame? See your shortest and longest word to check it will fit.</p>
+      <fieldset>
+        <label for="wordInput">Your message</label>
+        <input type="text" id="wordInput" value="Happy Birthday to my wonderful sister">
+        <button type="button" class="tool-btn" id="wordBtn">Check message</button>
+        <p class="result">Shortest word: <span id="shortest">–</span><br>Longest word: <span id="longest">–</span><br>Words: <span id="wordCount">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Sweater size guide</h3>
+      <p class="hint">Our knitted and crochet sweaters are made to order. Enter your weight and height for a suggested size.</p>
+      <fieldset>
+        <label for="weight">Weight (in kilograms)</label>
+        <input type="text" id="weight">
+        <label for="height">Height (in meters)</label>
+        <input type="text" id="height">
+        <button type="button" class="tool-btn" onclick="calculate();">Find my size</button>
+        <p class="error" id="bmiError" role="alert"></p>
+        <p class="result">Your BMI is <span id="score">–</span>.<br>Your body type is <span id="type">–</span>.<br>Suggested size: <span id="size">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Blanket designer</h3>
+      <p class="hint">Plan a patchwork blanket. Each crochet square is randomly pink or blue (up to 15 × 15).</p>
+      <div>
+        <div class="inline">
+          <input type="text" id="rows" placeholder="Rows" aria-label="Rows of squares">
+          <input type="text" id="columns" placeholder="Columns" aria-label="Columns of squares">
+        </div>
+        <button type="button" class="tool-btn" onclick="grow();">Design Blanket</button>
+        <p class="error" id="gardenError" role="alert"></p>
+      </div>
+      <div id="garden"></div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Price converter</h3>
+      <p class="hint">Ordering from abroad? Convert our prices between rupees and dollars. ₹1 = $0.015 and $1 = ₹67.12.</p>
+      <fieldset>
+        <div class="inline">
+          <input type="text" id="data" placeholder="Amount" aria-label="Amount">
+          <select id="from" aria-label="Convert from">
+            <option value="inr">Indian Rupee</option>
+            <option value="usd">US Dollar</option>
+          </select>
+          <span>to</span>
+          <select id="to" aria-label="Convert to">
+            <option value="usd">US Dollar</option>
+            <option value="inr">Indian Rupee</option>
+          </select>
+        </div>
+        <button type="button" class="tool-btn" onclick="convert();">Convert</button>
+        <p class="result">Price: <span id="answer">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Can’t pick a yarn colour?</h3>
+      <p class="hint">Flip a pom-pom coin: pink or blue. We keep count of each.</p>
+      <div class="coin-wrap">
+        <img id="coin" alt="Pink pom-pom">
+        <button type="button" class="tool-btn" id="flip">Flip!</button>
+        <p class="result">Pink total: <span id="num_heads">0</span><br>Blue total: <span id="num_tails">0</span></p>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Photo frame order calculator</h3>
+      <p class="hint">Large ₹599, medium ₹199, small ₹99, matching the price list above. Choose a gift-wrap style and see your total.</p>
+      <fieldset>
+        <label for="large">Large frames</label>
+        <input type="text" id="large" value="0">
+        <label for="medium">Medium frames</label>
+        <input type="text" id="medium" value="0">
+        <label for="small">Small frames</label>
+        <input type="text" id="small" value="0">
+        <label>Gift wrap</label>
+        <div class="radio-line">
+          <label><input type="radio" value="0" name="wrap" checked="checked"> None</label>
+          <label><input type="radio" value="30" name="wrap"> Simple (₹30)</label>
+          <label><input type="radio" value="60" name="wrap"> Premium (₹60)</label>
+        </div>
+        <button type="button" class="tool-btn" id="submit">Calculate Order</button>
+        <p class="result">Total: <span id="price">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Spot it in the shop</h3>
+      <p class="hint">Highlight parts of this page. Each button finds them in a different way.</p>
+      <div class="dom-btns">
+        <button type="button" class="tool-btn" data-find="id">Price table (by id)</button>
+        <button type="button" class="tool-btn" data-find="tag">All shop notes (by tag name)</button>
+        <button type="button" class="tool-btn" data-find="class">Product photos (by class name)</button>
+        <button type="button" class="tool-btn" data-find="css">Order prompt (by CSS selector)</button>
+      </div>
+      <p class="result" id="findResult" aria-live="polite">Pick a button to see what it finds.</p>
+      <p class="result" id="demo" aria-live="polite">Click anywhere on the page to see where you clicked.</p>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Wishlist playground</h3>
+      <p class="hint">Click the bunny to add it to your wishlist, double-click to clear it, and watch each event appear in the log.</p>
+      <div class="playground-box" id="playBox" tabindex="0">🧶 Crochet bunny toy: hover, click or double-click</div>
+      <p class="result">Wishlist: <span id="wishCount">0</span> bunny toy(s)</p>
+      <label for="playInput">Leave a note for the maker</label>
+      <input type="text" id="playInput" placeholder="Type a note, then click away">
+      <ul id="eventLog" aria-live="off"><li>No events yet.</li></ul>
+      <p class="result">Page loaded <span id="loadInfo">–</span> · window <span id="sizeInfo">–</span> · scrolled <span id="scrollInfo">0</span>px</p>
+
+      <h3 style="margin-top:22px;">How this page responds to you</h3>
+      <div class="events-table-wrap">
+        <table>
+          <thead><tr><th>Event</th><th>What triggers it</th></tr></thead>
+          <tbody>
+            <tr><td>onabort</td><td>Triggers on an abort event</td></tr>
+            <tr><td>onblur</td><td>Triggers when the window loses focus</td></tr>
+            <tr><td>onchange</td><td>Triggers when an element changes</td></tr>
+            <tr><td>onclick</td><td>Triggers on a mouse click</td></tr>
+            <tr><td>ondblclick</td><td>Triggers on a mouse double-click</td></tr>
+            <tr><td>ondrag</td><td>Triggers when an element is dragged</td></tr>
+            <tr><td>onfocus</td><td>Triggers when the window gets focus</td></tr>
+            <tr><td>onkeyup</td><td>Triggers when a key is released</td></tr>
+            <tr><td>onload</td><td>Triggers when the document loads</td></tr>
+            <tr><td>onkeydown</td><td>Triggers when a key is pressed</td></tr>
+            <tr><td>onkeypress</td><td>Triggers when a key is pressed and released</td></tr>
+            <tr><td>onmousedown</td><td>Triggers when a mouse button is pressed</td></tr>
+            <tr><td>onmousemove</td><td>Triggers when the mouse pointer moves</td></tr>
+            <tr><td>onmouseout</td><td>Triggers when the mouse pointer moves out of an element</td></tr>
+            <tr><td>onmouseover</td><td>Triggers when the mouse pointer moves over an element</td></tr>
+            <tr><td>onmouseup</td><td>Triggers when a mouse button is released</td></tr>
+            <tr><td>onresize</td><td>Triggers when the window is resized</td></tr>
+            <tr><td>onscroll</td><td>Triggers when an element’s scrollbar is being scrolled</td></tr>
+            <tr><td>onsubmit</td><td>Triggers when a form is submitted</td></tr>
+            <tr><td>onunload</td><td>Triggers when the user leaves the document</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="studio-section" id="studio">
+  <h2>Studio Live</h2>
+  <p class="tools-intro">See how long your order takes, preview a gift banner, track a parcel and hold your checkout slot.</p>
+
+  <div class="tool-grid">
+
+    <div class="tool-card">
+      <h3>Estimated ready date</h3>
+      <p class="hint">Pick what you want made. We count from today and show when it could be ready. Days are estimates.</p>
+      <fieldset>
+        <label for="etaItem">Craft</label>
+        <select id="etaItem">
+          <option value="3">Photo frame (3 days)</option>
+          <option value="2">Keychain (2 days)</option>
+          <option value="6">Bag (6 days)</option>
+          <option value="10">Apparel (10 days)</option>
+          <option value="7">Soft toy (7 days)</option>
+        </select>
+        <button type="button" class="tool-btn" id="etaBtn">Get ready date</button>
+        <p class="result">Ready by: <span id="etaResult">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Featured crafts</h3>
+      <p class="hint">Choose a product to see its name and price.</p>
+      <div class="btn-row" id="featuredBtns"></div>
+      <p class="result" id="featured" aria-live="polite">Pick a craft above.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>Gift banner preview</h3>
+      <p class="hint">Type a name, then style the banner for your gift. You can also fade it out.</p>
+      <label for="bannerText">Banner text</label>
+      <input type="text" id="bannerText" value="Happy Birthday, Amma!">
+      <label for="bannerColor">Text colour</label>
+      <select id="bannerColor">
+        <option value="#1a1a1a">Black</option>
+        <option value="#2b4acb">Blue</option>
+        <option value="#b3184f">Berry</option>
+        <option value="#1f7a4d">Green</option>
+      </select>
+      <label for="bannerBg">Background</label>
+      <select id="bannerBg">
+        <option value="#fff3a3">Butter yellow</option>
+        <option value="#fbdff0">Pink</option>
+        <option value="#d9e4ff">Sky blue</option>
+        <option value="#ffffff">White</option>
+      </select>
+      <label for="bannerSize">Font size: <span id="bannerSizeVal">28</span>px</label>
+      <input type="range" id="bannerSize" min="16" max="48" value="28">
+      <div class="btn-row">
+        <button type="button" class="tool-btn" id="styleBtn">Change Style</button>
+        <button type="button" class="tool-btn ghost" id="fadeBtn">Fade Out</button>
+        <button type="button" class="tool-btn ghost" id="fadeResetBtn">Reset</button>
+      </div>
+      <div class="banner-stage"><div id="bannerPreview">Happy Birthday, Amma!</div></div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Care tips</h3>
+      <p class="hint">Show or hide care instructions for crochet and knitted pieces.</p>
+      <div class="btn-row">
+        <button type="button" class="tool-btn" id="showTips">Show</button>
+        <button type="button" class="tool-btn ghost" id="hideTips">Hide</button>
+      </div>
+      <p id="careTips">Hand wash in cool water with mild soap. Press out water gently without wringing, then dry flat away from direct sun. Store folded, not hung, so it keeps its shape.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>Parcel tracker</h3>
+      <p class="hint">Watch a sample parcel travel from our workshop to your door.</p>
+      <div class="parcel-track" id="parcelTrack"><div id="parcel"></div></div>
+      <div class="track-labels"><span>Workshop</span><span>On the way</span><span>Your door</span></div>
+      <button type="button" class="tool-btn" id="moveBtn">Start Animation</button>
+      <p class="result" id="parcelStatus" aria-live="polite">Parcel is packed and waiting.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>Hold my order slot</h3>
+      <p class="hint">Start a 5-minute hold while you finish your order form. Stop it any time.</p>
+      <div class="countdown" id="holdTime" aria-live="off">05:00</div>
+      <div class="btn-row">
+        <button type="button" class="tool-btn" id="holdStart">Hold my slot</button>
+        <button type="button" class="tool-btn ghost" id="holdStop">Stop</button>
+        <button type="button" class="tool-btn ghost" id="holdReset">Reset</button>
+      </div>
+      <p class="result" id="holdMsg" aria-live="polite"></p>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Date inspector</h3>
+      <p class="hint">What the JavaScript Date object reports right now, updated every second.</p>
+      <div class="date-scroll">
+        <table class="date-table">
+          <thead><tr><th>Method</th><th>Value now</th></tr></thead>
+          <tbody id="dateRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Timers used on this page</h3>
+      <p class="hint">Where each timing function is working behind the scenes.</p>
+      <div class="timer-wrap">
+        <table class="timer-table">
+          <thead><tr><th>Function</th><th>Purpose</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>setInterval()</td><td>Repeats code after a fixed interval</td><td>Live date bar, date inspector, parcel tracker, order-slot countdown</td></tr>
+            <tr><td>setTimeout()</td><td>Runs code once after a delay</td><td>Tips bar appearing after 5 seconds, order confirmation message</td></tr>
+            <tr><td>clearInterval()</td><td>Stops a repeating timer</td><td>Parcel arriving, Stop and Reset on the order-slot countdown</td></tr>
+            <tr><td>clearTimeout()</td><td>Cancels a scheduled timeout</td><td>Closing the tips bar early, replacing the order message</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="workshop-section" id="workshop">
+  <h2>Craft Workshop</h2>
+  <p class="tools-intro">Plan your budget, build a basket and design a bag. These tools run on jQuery.</p>
+
+  <div class="tool-grid">
+
+    <div class="tool-card wide">
+      <h3>Craft budget planner</h3>
+      <p class="hint">Enter what you want to spend and how to split it. The four shares must add up to 100%.</p>
+      <label for="budgetAmount">Amount you want to manage (₹)</label>
+      <input type="text" id="budgetAmount" value="15000">
+      <div class="pct-grid">
+        <div><label for="pctMaterials">Materials (%)</label><input type="text" id="pctMaterials" value="50"></div>
+        <div><label for="pctAccessories">Accessories (%)</label><input type="text" id="pctAccessories" value="20"></div>
+        <div><label for="pctPackaging">Packaging &amp; delivery (%)</label><input type="text" id="pctPackaging" value="20"></div>
+        <div><label for="pctSavings">Savings (%)</label><input type="text" id="pctSavings" value="10"></div>
+      </div>
+      <button type="button" class="tool-btn" id="budgetBtn">Evaluate My Money</button>
+      <div class="budget-boxes" id="budgetBoxes" aria-live="polite">
+        <div class="budget-box" id="outMaterials"></div>
+        <div class="budget-box" id="outAccessories"></div>
+        <div class="budget-box" id="outPackaging"></div>
+        <div class="budget-box" id="outSavings"></div>
+      </div>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Order handmade crafts</h3>
+      <p class="hint">Choose how many of each piece you want, then place your order to see the bill. Prices shown are sample prices.</p>
+      <div class="shop-row">
+        <div class="shop-item">
+          <img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=400&h=400&fit=crop" alt="Crochet keychain">
+          <div class="cap">Crochet Keychain – ₹149</div>
+          <label for="qtyKeychain">Quantity</label>
+          <input type="text" id="qtyKeychain" value="2">
+        </div>
+        <div class="shop-item">
+          <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc935?w=400&h=400&fit=crop" alt="Crochet backpack">
+          <div class="cap">Crochet Backpack – ₹799</div>
+          <label for="qtyBackpack">Quantity</label>
+          <input type="text" id="qtyBackpack" value="1">
+        </div>
+        <div class="shop-item">
+          <img src="https://images.unsplash.com/photo-1520006403909-838d6b92c22e?w=400&h=400&fit=crop" alt="Handmade sweater">
+          <div class="cap">Handmade Sweater – ₹1,299</div>
+          <label for="qtySweater">Quantity</label>
+          <input type="text" id="qtySweater" value="0">
+        </div>
+        <div class="shop-item">
+          <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&h=400&fit=crop" alt="Crochet bunny toy">
+          <div class="cap">Crochet Bunny Toy – ₹499</div>
+          <label for="qtyBunny">Quantity</label>
+          <input type="text" id="qtyBunny" value="1">
+        </div>
+      </div>
+      <button type="button" class="tool-btn" id="placeOrderBtn">Place Order</button>
+      <div id="billBox" aria-live="polite">
+        <h4>Purchase Order Bill</h4>
+        <table class="bill-lines"><tbody id="billLines"></tbody></table>
+        <div class="bill-total"><span class="label">Total Price</span><span class="amount" id="billTotal"></span></div>
+      </div>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Bag workshop</h3>
+      <p class="hint">Design your own crochet bag. Change the colours and the size of the buttons, or start again.</p>
+      <div class="bag-stage" aria-label="Bag preview">
+        <div id="bagHandle"></div>
+        <div id="bagBody"></div>
+        <div id="bagTrim"></div>
+        <div class="bag-button" id="bagBtnL"></div>
+        <div class="bag-button" id="bagBtnR"></div>
+      </div>
+      <div class="btn-row" style="justify-content:center;">
+        <button type="button" class="tool-btn ghost" id="bagColorBtn">Change Bag Colour</button>
+        <button type="button" class="tool-btn ghost" id="bagTrimBtn">Change Trim Colour</button>
+        <button type="button" class="tool-btn ghost" id="buttonUp">Button Size Increase</button>
+        <button type="button" class="tool-btn ghost" id="buttonDown">Button Size Decrease</button>
+        <button type="button" class="tool-btn ghost" id="bagReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Quick price adder</h3>
+      <p class="hint">Add the prices of two items to see what they cost together.</p>
+      <label for="qaNum1">Item 1 price (₹)</label>
+      <input type="text" id="qaNum1">
+      <label for="qaNum2">Item 2 price (₹)</label>
+      <input type="text" id="qaNum2">
+      <button type="button" class="tool-btn" id="qaBtn">Addition</button>
+      <label for="qaResult" style="margin-top:12px;">Result</label>
+      <input type="text" id="qaResult" readonly>
+      <div class="adder-box" id="qaBox"></div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Craft tips</h3>
+      <p class="hint">Tap a tip to put it away. Bring them all back whenever you like.</p>
+      <div class="tip-list" id="tipList">
+        <p>Wash crochet pieces by hand in cool water.</p>
+        <p>Dry sweaters flat so they keep their shape.</p>
+        <p>Share a reference photo with your custom order.</p>
+        <p>Order a week early for gifts with a deadline.</p>
+      </div>
+      <button type="button" class="tool-btn ghost" id="showTipsAll">Show all tips</button>
+    </div>
+
+  </div>
+  <p class="error" id="jqMissing" role="alert" style="text-align:center;"></p>
+</section>
+
+<section class="react-section" id="join">
+  <h2>Craft.co in ReactJS</h2>
+  <p class="tools-intro">The whole store, rebuilt as a complete ReactJS app: shop, cart, custom orders, sign up, login, profile and more.</p>
+  <div class="tool-card wide react-cta">
+    <p class="hint">Opens in a new tab. It needs an internet connection to load React.</p>
+    <a class="tool-btn" href="craft-react.html" target="_blank" rel="noopener">Open the React app</a>
+  </div>
+</section>
+
+<div class="toast" id="orderToast" role="status"></div>
+<div class="toast" id="offerBar" role="status">
+  <span>Planning a custom order? Try the <a href="#tools">Craft Tools</a> or <a href="#studio">Studio Live</a>.</span>
+  <button type="button" id="offerClose">Close</button>
+</div>
+
+<section class="auth-section" id="auth">
+  <h2>Sign In / Sign Up</h2>
+  <div class="auth-boxes">
+    <div class="auth-box">
+      <h3>Sign In</h3>
+      <form id="signInForm">
+        <label for="si-username">Username</label>
+        <input type="text" id="si-username" name="username" placeholder="Enter Username / Email" required>
+        <label for="si-password">Password</label>
+        <input type="password" id="si-password" name="password" placeholder="Enter Password" required>
+        <button type="submit" class="auth-submit">Sign In</button>
+        <p class="auth-switch">New here? <a href="#signUpForm">Create an account</a></p>
+      </form>
+    </div>
+    <div class="auth-box">
+      <h3>Sign Up</h3>
+      <form id="signUpForm">
+        <label for="su-name">Name</label>
+        <input type="text" id="su-name" name="name" placeholder="Enter Name" required>
+        <label for="su-email">Email</label>
+        <input type="email" id="su-email" name="email" placeholder="Enter Email" required>
+        <label for="su-password">Password</label>
+        <input type="password" id="su-password" name="password" placeholder="At least 8 characters" minlength="8" required>
+        <button type="submit" class="auth-submit">Sign Up</button>
+        <p class="auth-switch">Already a member? <a href="#signInForm">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-wrapper" id="about">
+  <h2>Testimonials</h2>
+
+  <div class="video-card">
+    <div class="video-thumb">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&h=440&fit=crop" alt="Video note from customer">
+      <span class="duration">1:07</span>
+    </div>
+  </div>
+  <p class="caption">Video Note from Customer</p>
+
+  <div class="audio-player">
+    <span class="play-btn"></span>
+    <span class="time">00:00</span>
+    <div class="track"></div>
+    <span class="time">00:00</span>
+  </div>
+  <p class="audio-caption">Audio Note from Customer</p>
+</section>
+
+<section class="location-wrapper" id="contact">
+  <h2>location</h2>
+  <div class="map-frame">
+    <iframe
+      src="https://www.google.com/maps?q=San%20Francisco&output=embed"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      title="Craft.co location map">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <p><strong>Contact Us</strong></p>
+    <p>Phone &nbsp; +91 97666 54375</p>
+    <p>Email &nbsp; www.hello@craft.co</p>
+  </div>
+  <div>
+    <p>www.craft.co</p>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  const fileInput = document.getElementById('reference-image');
+  const fileNameLabel = document.getElementById('fileName');
+  fileInput.addEventListener('change', () => {
+    fileNameLabel.textContent = fileInput.files.length ? fileInput.files[0].name : 'No file selected';
+  });
+
+  const rateSlider = document.getElementById('rate');
+  const updateSlider = () => {
+    const min = Number(rateSlider.min), max = Number(rateSlider.max), val = Number(rateSlider.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    rateSlider.style.background = `linear-gradient(to right, #e0384c 0%, #e0384c ${pct}%, #f2c7de ${pct}%, #f2c7de 100%)`;
+  };
+  rateSlider.addEventListener('input', updateSlider);
+  updateSlider();
+
+  // ---- Talking to the Node.js server (node server-site.js) ----
+  async function postJson(url, payload) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      let data = {};
+      try { data = await res.json(); } catch (err) { /* no JSON body */ }
+      return { ok: res.ok, status: res.status, data: data };
+    } catch (err) {
+      return {
+        ok: false, status: 0,
+        data: { errors: ['Could not reach the Craft.co server. Start it with "node server-site.js" and open http://localhost:3000.'] }
+      };
+    }
+  }
+  function errorText(r) {
+    return (r.data && r.data.errors && r.data.errors.length) ? r.data.errors.join(' ') : 'Something went wrong. Please try again.';
+  }
+  function setSignedIn(name) {
+    const link = document.querySelector('nav a[href="#auth"]');
+    if (link) link.textContent = 'Hi, ' + name.split(' ')[0];
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const button = form.querySelector('.submit-btn');
+    button.disabled = true;
+    const payload = {
+      name: form.elements['name'].value,
+      phone: form.elements['phone'].value,
+      email: form.elements['email'].value,
+      category: form.elements['category'].value,
+      expectedDate: document.getElementById('expected-date').value,
+      referenceImageName: fileInput.files.length ? fileInput.files[0].name : '',
+      sources: Array.from(form.querySelectorAll('input[name="source"]:checked')).map((c) => c.value),
+      payment: (form.querySelector('input[name="payment"]:checked') || {}).value,
+      feedback: form.elements['feedback'].value,
+      rate: Number(rateSlider.value)
+    };
+    const r = await postJson('/api/orders', payload);
+    button.disabled = false;
+    if (r.ok) {
+      showOrderToast('Thank you! Your order request ' + r.data.id + ' has been received.');
+      form.reset();
+      fileNameLabel.textContent = 'No file selected';
+      updateSlider();
+    } else {
+      showOrderToast(errorText(r), 7000);
+    }
+  });
+
+  // Dropdown: tap-to-toggle on touch/mobile, hover still works on desktop via CSS
+  document.querySelectorAll('.nav-item').forEach((navItem) => {
+    const navItemLink = navItem.querySelector(':scope > a');
+    navItemLink.addEventListener('click', (e) => {
+      if (window.matchMedia('(max-width: 700px)').matches) {
+        e.preventDefault();
+        navItem.classList.toggle('open');
+      }
+    });
+  });
+
+  document.getElementById('signInForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const r = await postJson('/api/signin', {
+      username: document.getElementById('si-username').value,
+      password: document.getElementById('si-password').value
+    });
+    if (r.ok) {
+      showOrderToast('Welcome back, ' + r.data.name + '!');
+      setSignedIn(r.data.name);
+      form.reset();
+    } else {
+      showOrderToast(errorText(r), 7000);
+    }
+  });
+
+  document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const r = await postJson('/api/signup', {
+      name: document.getElementById('su-name').value,
+      email: document.getElementById('su-email').value,
+      password: document.getElementById('su-password').value
+    });
+    if (r.ok) {
+      showOrderToast('Account created. Welcome, ' + r.data.name + '!');
+      setSignedIn(r.data.name);
+      form.reset();
+    } else {
+      showOrderToast(errorText(r), 7000);
+    }
+  });
+</script>
+
+
+<script>
+  /* ===== Craft Tools: DOM elements and events ===== */
+
+  // Drawn crochet motifs, so no image files are needed
+  function svgUri(svg) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); }
+  function pompom(color) {
+    let tufts = '';
+    for (let a = 0; a < 360; a += 30) {
+      const x = 50 + 30 * Math.cos(a * Math.PI / 180), y = 50 + 30 * Math.sin(a * Math.PI / 180);
+      tufts += "<circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='14' fill='" + color + "' stroke='#1a1a1a' stroke-width='2'/>";
+    }
+    return svgUri("<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>" + tufts +
+      "<circle cx='50' cy='50' r='24' fill='" + color + "' stroke='#1a1a1a' stroke-width='2'/></svg>");
+  }
+  function grannySquare(outer, inner) {
+    return svgUri("<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>" +
+      "<rect x='3' y='3' width='94' height='94' rx='6' fill='" + outer + "' stroke='#1a1a1a' stroke-width='3'/>" +
+      "<rect x='22' y='22' width='56' height='56' rx='4' fill='" + inner + "' stroke='#1a1a1a' stroke-width='2'/>" +
+      "<circle cx='50' cy='50' r='11' fill='" + outer + "' stroke='#1a1a1a' stroke-width='2'/></svg>");
+  }
+  const POMPOM = { pink: pompom('#f27fb5'), blue: pompom('#7f9cf2') };
+  const SQUARE = { pink: grannySquare('#f27fb5', '#fde6f1'), blue: grannySquare('#7f9cf2', '#e4eafd') };
+
+  // 1. Gift message checker: shortest and longest word
+  function findWords(text) {
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return null;
+    let shortest = words[0], longest = words[0];
+    for (let i = 1; i < words.length; i++) {
+      if (words[i].length < shortest.length) shortest = words[i];
+      if (words[i].length > longest.length) longest = words[i];
+    }
+    return { shortest: shortest, longest: longest, count: words.length };
+  }
+  document.getElementById('wordBtn').addEventListener('click', () => {
+    const r = findWords(document.getElementById('wordInput').value);
+    document.getElementById('shortest').textContent = r ? r.shortest + ' (' + r.shortest.length + ' letters)' : 'Enter a message';
+    document.getElementById('longest').textContent  = r ? r.longest + ' (' + r.longest.length + ' letters)' : 'Enter a message';
+    document.getElementById('wordCount').textContent = r ? r.count : '–';
+  });
+
+  // 2. Sweater size guide: BMI, body type and suggested size
+  function calculate() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const err = document.getElementById('bmiError');
+    if (!(weight > 0) || !(height > 0)) {
+      err.textContent = 'Enter weight in kilograms and height in meters, for example 60 and 1.65.';
+      return;
+    }
+    err.textContent = '';
+    const bmi = weight / (height * height);
+    let type, size;
+    if (bmi < 18)       { type = 'Underweight'; size = 'S'; }
+    else if (bmi < 25)  { type = 'Normal';      size = 'M'; }
+    else if (bmi <= 30) { type = 'Overweight';  size = 'L'; }
+    else                { type = 'Obese';       size = 'XL'; }
+    document.getElementById('score').innerHTML = bmi.toFixed(1);
+    document.getElementById('type').innerHTML = type;
+    document.getElementById('size').innerHTML = size + ' (a starting point, custom sizes on request)';
+  }
+
+  // 3. Blanket designer: random pink or blue squares in a grid
+  function grow() {
+    const rows = parseInt(document.getElementById('rows').value, 10);
+    const cols = parseInt(document.getElementById('columns').value, 10);
+    const err = document.getElementById('gardenError');
+    const blanket = document.getElementById('garden');
+    if (!(rows > 0) || !(cols > 0) || rows > 15 || cols > 15) {
+      err.textContent = 'Enter rows and columns between 1 and 15.';
+      return;
+    }
+    err.textContent = '';
+    blanket.innerHTML = '';
+    blanket.style.gridTemplateColumns = 'repeat(' + cols + ', minmax(0, 44px))';
+    const colours = ['pink', 'blue'];
+    for (let i = 0; i < rows * cols; i++) {
+      const colour = colours[Math.floor(Math.random() * 2)]; // equal probability
+      const img = document.createElement('img');
+      img.width = 100; img.height = 100;
+      img.alt = colour + ' crochet square';
+      img.src = SQUARE[colour];
+      blanket.appendChild(img);
+    }
+  }
+
+  // 4. Price converter
+  function convert() {
+    const value = parseFloat(document.getElementById('data').value);
+    const from = document.getElementById('from');
+    const to = document.getElementById('to');
+    const fromUnit = from[from.selectedIndex].value;
+    const toUnit = to[to.selectedIndex].value;
+    const answer = document.getElementById('answer');
+    if (isNaN(value)) { answer.innerHTML = 'Enter an amount'; return; }
+    let result = value;
+    if (fromUnit === 'inr' && toUnit === 'usd') result = value * 0.015;
+    else if (fromUnit === 'usd' && toUnit === 'inr') result = value * 67.12;
+    answer.innerHTML = (toUnit === 'usd' ? '$' : '\u20B9') + result.toFixed(2);
+  }
+
+  // 5. Yarn colour flip
+  let pinkCount = 0, blueCount = 0;
+  const coin = document.getElementById('coin');
+  coin.src = POMPOM.pink;
+  function flipFunction() {
+    if (Math.random() < 0.5) {
+      coin.src = POMPOM.pink; coin.alt = 'Pink pom-pom';
+      pinkCount++;
+      document.getElementById('num_heads').innerHTML = pinkCount;
+    } else {
+      coin.src = POMPOM.blue; coin.alt = 'Blue pom-pom';
+      blueCount++;
+      document.getElementById('num_tails').innerHTML = blueCount;
+    }
+  }
+  document.getElementById('flip').addEventListener('click', flipFunction);
+
+  // 6. Photo frame order calculator (unobtrusive handler)
+  document.getElementById('submit').addEventListener('click', () => {
+    const large  = parseInt(document.getElementById('large').value, 10)  || 0;
+    const medium = parseInt(document.getElementById('medium').value, 10) || 0;
+    const small  = parseInt(document.getElementById('small').value, 10)  || 0;
+    const wrap = Number(document.querySelector('input[name="wrap"]:checked').value);
+    const frames = large + medium + small;
+    const total = large * 599 + medium * 199 + small * 99 + (frames > 0 ? wrap * frames : 0);
+    document.getElementById('price').textContent = '\u20B9' + total.toLocaleString('en-IN') +
+      (frames > 0 && wrap > 0 ? ' (gift wrap on ' + frames + ' frame' + (frames > 1 ? 's' : '') + ')' : '');
+  });
+
+  // Spot it in the shop: four ways to find elements
+  function flash(nodes) {
+    const list = nodes.length === undefined ? [nodes] : Array.from(nodes);
+    list.forEach(el => el && el.classList.add('hl'));
+    setTimeout(() => list.forEach(el => el && el.classList.remove('hl')), 1800);
+    return list.length;
+  }
+  document.querySelectorAll('[data-find]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const out = document.getElementById('findResult');
+      const how = btn.dataset.find;
+      let n, msg;
+      if (how === 'id') {
+        n = flash(document.getElementById('orders'));
+        msg = 'getElementById("orders") found the customised price table section (' + n + ' element).';
+      } else if (how === 'tag') {
+        n = flash(document.getElementsByTagName('p'));
+        msg = 'getElementsByTagName("p") found ' + n + ' paragraphs on the page.';
+      } else if (how === 'class') {
+        n = flash(document.getElementsByClassName('product-card'));
+        msg = 'getElementsByClassName("product-card") found ' + n + ' product photos.';
+      } else {
+        n = flash(document.querySelectorAll('p.order-like'));
+        msg = 'querySelectorAll("p.order-like") found the "Order As You Like" prompt (' + n + ' element).';
+      }
+      out.textContent = msg;
+    });
+  });
+
+  // Document-level click handler
+  document.addEventListener('click', (e) => {
+    document.getElementById('demo').innerHTML = 'You clicked at x: ' + e.clientX + ', y: ' + e.clientY + '.';
+  });
+
+  // Wishlist playground: mouse, key, focus and change events
+  const log = document.getElementById('eventLog');
+  let logCount = 0;
+  function logEvent(name, detail) {
+    if (logCount === 0) log.innerHTML = '';
+    logCount++;
+    const li = document.createElement('li');
+    li.textContent = name + (detail ? ' \u2013 ' + detail : '');
+    log.insertBefore(li, log.firstChild);
+    while (log.children.length > 6) log.removeChild(log.lastChild);
+  }
+  const box = document.getElementById('playBox');
+  const wishCount = document.getElementById('wishCount');
+  let wishes = 0;
+  box.addEventListener('mouseover', () => { box.classList.add('hover'); logEvent('mouseover'); });
+  box.addEventListener('mouseout',  () => { box.classList.remove('hover'); logEvent('mouseout'); });
+  let lastMove = 0;
+  box.addEventListener('mousemove', () => {
+    const now = Date.now();
+    if (now - lastMove > 600) { lastMove = now; logEvent('mousemove'); }
+  });
+  box.addEventListener('mousedown', () => logEvent('mousedown'));
+  box.addEventListener('mouseup',   () => logEvent('mouseup'));
+  box.addEventListener('click',     () => { wishes++; wishCount.textContent = wishes; logEvent('click', 'added to wishlist'); });
+  box.addEventListener('dblclick',  () => { wishes = 0; wishCount.textContent = wishes; logEvent('dblclick', 'wishlist cleared'); });
+  box.addEventListener('keydown', (e) => logEvent('keydown', e.key));
+  box.addEventListener('keyup',   (e) => logEvent('keyup', e.key));
+  const playInput = document.getElementById('playInput');
+  playInput.addEventListener('focus',    () => logEvent('focus'));
+  playInput.addEventListener('blur',     () => logEvent('blur'));
+  playInput.addEventListener('change',   () => logEvent('change', 'note saved'));
+  playInput.addEventListener('keydown',  (e) => logEvent('keydown', e.key));
+  playInput.addEventListener('keypress', (e) => logEvent('keypress', e.key));
+  playInput.addEventListener('keyup',    (e) => logEvent('keyup', e.key));
+
+  // Window events: load, resize, scroll
+  window.addEventListener('load', () => {
+    document.getElementById('loadInfo').textContent = 'at ' + new Date().toLocaleTimeString();
+  });
+  function showSize() {
+    document.getElementById('sizeInfo').textContent = window.innerWidth + ' \u00D7 ' + window.innerHeight;
+  }
+  window.addEventListener('resize', showSize);
+  showSize();
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollInfo').textContent = Math.round(window.scrollY);
+  });
+</script>
+
+<script>
+  /* ===== Studio Live: timing events, Date, classes, styles and animation ===== */
+
+  // ---- Date object: live bar and inspector ----
+  const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const pad = (n) => String(n).padStart(2, '0');
+
+  const dateMethods = [
+    ['getDate()',         d => d.getDate()],
+    ['getDay()',          d => d.getDay() + ' (' + DAY_NAMES[d.getDay()] + ')'],
+    ['getFullYear()',     d => d.getFullYear()],
+    ['getHours()',        d => d.getHours()],
+    ['getMilliseconds()', d => d.getMilliseconds()],
+    ['getMinutes()',      d => d.getMinutes()],
+    ['getMonth()',        d => d.getMonth() + ' (' + MONTH_NAMES[d.getMonth()] + ')'],
+    ['getSeconds()',      d => d.getSeconds()],
+    ['getTime()',         d => d.getTime()],
+    ['toString()',        d => d.toString()],
+    ['toTimeString()',    d => d.toTimeString()]
+  ];
+  const dateRows = document.getElementById('dateRows');
+  const dateCells = dateMethods.map(([name]) => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('td'); th.textContent = name;
+    const td = document.createElement('td');
+    tr.appendChild(th); tr.appendChild(td); dateRows.appendChild(tr);
+    return td;
+  });
+
+  function tick() {
+    const now = new Date();
+    document.getElementById('liveBar').textContent =
+      'Open for custom orders \u00B7 ' + DAY_NAMES[now.getDay()] + ', ' + now.getDate() + ' ' +
+      MONTH_NAMES[now.getMonth()] + ' ' + now.getFullYear() + ' \u00B7 ' +
+      pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+    dateMethods.forEach(([, fn], i) => { dateCells[i].textContent = fn(now); });
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---- Date setters: estimated ready date ----
+  function readyDate(days) {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+  function toInputValue(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+  document.getElementById('etaBtn').addEventListener('click', () => {
+    const days = parseInt(document.getElementById('etaItem').value, 10);
+    const d = readyDate(days);
+    document.getElementById('etaResult').textContent =
+      DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] + ' ' + d.getFullYear();
+  });
+  // Order form: earliest expected date depends on the chosen category
+  const DAYS_BY_CATEGORY = { 'photo-frame': 3, 'keychain': 2, 'bag': 6, 'apparel': 10, 'soft-toy': 7 };
+  const expectedInput = document.getElementById('expected-date');
+  expectedInput.min = toInputValue(readyDate(1));
+  document.getElementById('category').addEventListener('change', (e) => {
+    expectedInput.min = toInputValue(readyDate(DAYS_BY_CATEGORY[e.target.value] || 1));
+  });
+
+  // ---- Class and object: featured crafts ----
+  class Product {
+    constructor(name, price) {
+      this.name = name;
+      this.price = price;
+    }
+    present() {
+      return this.name + ' costs \u20B9' + this.price;
+    }
+  }
+  const featuredProducts = [
+    new Product('Customised Photo Frame Large', 599),
+    new Product('Customised Photo Frame Medium', 199),
+    new Product('Customised Photo Frame Small', 99)
+  ];
+  const featuredBtns = document.getElementById('featuredBtns');
+  featuredProducts.forEach((prod) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tool-btn ghost';
+    b.textContent = prod.name.replace('Customised Photo Frame ', '');
+    b.addEventListener('click', () => {
+      document.getElementById('featured').innerHTML = prod.present() + '.';
+    });
+    featuredBtns.appendChild(b);
+  });
+
+  // ---- Changing styles with JavaScript: gift banner ----
+  const banner = document.getElementById('bannerPreview');
+  let fadeId = null;
+  function changeStyle() {
+    clearInterval(fadeId);
+    banner.style.opacity = 1;
+    banner.textContent = document.getElementById('bannerText').value || 'Your message here';
+    banner.style.color = document.getElementById('bannerColor').value;
+    banner.style.fontSize = document.getElementById('bannerSize').value + 'px';
+    banner.style.backgroundColor = document.getElementById('bannerBg').value;
+  }
+  document.getElementById('styleBtn').addEventListener('click', changeStyle);
+  document.getElementById('bannerSize').addEventListener('input', (e) => {
+    document.getElementById('bannerSizeVal').textContent = e.target.value;
+  });
+  changeStyle();
+
+  // ---- Fade animation ----
+  function fade() {
+    clearInterval(fadeId);
+    let opacity = 1;
+    banner.style.opacity = opacity;
+    fadeId = setInterval(function () {
+      if (opacity <= 0) {
+        clearInterval(fadeId);
+      } else {
+        opacity -= 0.05;
+        banner.style.opacity = Math.max(opacity, 0);
+      }
+    }, 50);
+  }
+  document.getElementById('fadeBtn').addEventListener('click', fade);
+  document.getElementById('fadeResetBtn').addEventListener('click', () => {
+    clearInterval(fadeId);
+    banner.style.opacity = 1;
+  });
+
+  // ---- Showing and hiding elements ----
+  const careTips = document.getElementById('careTips');
+  function hideText() { careTips.style.display = 'none'; }
+  function showText() { careTips.style.display = 'block'; }
+  document.getElementById('hideTips').addEventListener('click', hideText);
+  document.getElementById('showTips').addEventListener('click', showText);
+
+  // ---- JavaScript animation: moving parcel with setInterval ----
+  let parcelTimer = null;
+  function move() {
+    const track = document.getElementById('parcelTrack');
+    const box = document.getElementById('parcel');
+    const status = document.getElementById('parcelStatus');
+    const maxPos = track.clientWidth - box.offsetWidth - 4;
+    let pos = 0;
+    clearInterval(parcelTimer);
+    box.style.left = '0px';
+    status.textContent = 'Parcel has left the workshop.';
+    parcelTimer = setInterval(frame, 10);
+    function frame() {
+      if (pos >= maxPos) {
+        clearInterval(parcelTimer);
+        status.textContent = 'Delivered! Your parcel has arrived.';
+      } else {
+        pos++;
+        box.style.left = pos + 'px';
+        if (pos > maxPos / 2 && pos < maxPos / 2 + 2) status.textContent = 'Parcel is on the way.';
+      }
+    }
+  }
+  document.getElementById('moveBtn').addEventListener('click', move);
+
+  // ---- setInterval / clearInterval: order slot countdown ----
+  const HOLD_SECONDS = 300;
+  let holdLeft = HOLD_SECONDS, holdTimer = null;
+  const holdTime = document.getElementById('holdTime');
+  const holdMsg = document.getElementById('holdMsg');
+  function showHold() { holdTime.textContent = pad(Math.floor(holdLeft / 60)) + ':' + pad(holdLeft % 60); }
+  document.getElementById('holdStart').addEventListener('click', () => {
+    if (holdTimer || holdLeft <= 0) return;
+    holdMsg.textContent = 'Your slot is held. Finish the order form above.';
+    holdTimer = setInterval(() => {
+      holdLeft--;
+      showHold();
+      if (holdLeft <= 0) {
+        clearInterval(holdTimer); holdTimer = null;
+        holdMsg.textContent = 'Time is up. Press Reset to hold your slot again.';
+      }
+    }, 1000);
+  });
+  document.getElementById('holdStop').addEventListener('click', () => {
+    if (!holdTimer) return;
+    clearInterval(holdTimer); holdTimer = null;
+    holdMsg.textContent = 'Paused at ' + holdTime.textContent + '.';
+  });
+  document.getElementById('holdReset').addEventListener('click', () => {
+    clearInterval(holdTimer); holdTimer = null;
+    holdLeft = HOLD_SECONDS; showHold(); holdMsg.textContent = '';
+  });
+
+  // ---- setTimeout / clearTimeout: order message and tips bar ----
+  const orderToast = document.getElementById('orderToast');
+  let toastTimer = null;
+  function showOrderToast(msg, ms) {
+    clearTimeout(toastTimer);
+    orderToast.textContent = msg;
+    orderToast.style.display = 'block';
+    toastTimer = setTimeout(() => { orderToast.style.display = 'none'; }, ms || 3500);
+  }
+
+  const offerBar = document.getElementById('offerBar');
+  const offerShow = setTimeout(() => {
+    offerBar.style.display = 'flex';
+    setTimeout(() => { offerBar.style.display = 'none'; }, 15000);
+  }, 5000);
+  document.getElementById('offerClose').addEventListener('click', () => {
+    clearTimeout(offerShow);
+    offerBar.style.display = 'none';
+  });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  /* ===== Craft Workshop: jQuery actions ===== */
+  if (!window.jQuery) {
+    document.getElementById('jqMissing').textContent =
+      'jQuery could not be loaded, so the Craft Workshop tools are switched off. Check your internet connection and reload.';
+  } else {
+    $(document).ready(function () {
+
+      var rupees = function (n) { return '\u20B9' + Number(n).toLocaleString('en-IN'); };
+
+      // 1) Craft budget planner
+      $('#budgetBtn').click(function () {
+        var amount = parseFloat($('#budgetAmount').val());
+        var parts = [
+          parseFloat($('#pctMaterials').val()),
+          parseFloat($('#pctAccessories').val()),
+          parseFloat($('#pctPackaging').val()),
+          parseFloat($('#pctSavings').val())
+        ];
+        var bad = isNaN(amount) || amount <= 0 || parts.some(function (v) { return isNaN(v) || v < 0; });
+        if (bad) {
+          alert('Please enter an amount above 0 and a percentage in every box.');
+          return;
+        }
+        var total = parts.reduce(function (a, b) { return a + b; }, 0);
+        if (Math.abs(total - 100) > 0.001) {
+          alert('Your percentages add up to ' + total + '%. They must add up to exactly 100% to divide the amount.');
+          return;
+        }
+        var ids = ['#outMaterials', '#outAccessories', '#outPackaging', '#outSavings'];
+        var names = ['Materials', 'Accessories', 'Packaging &amp; delivery', 'Savings'];
+        $.each(ids, function (i, id) {
+          var share = Math.round(amount * parts[i]) / 100;
+          $(id).html(names[i] + '<strong>' + rupees(share) + '</strong>');
+        });
+        $('#budgetBoxes').css('display', 'grid').hide().fadeIn(300);
+      });
+
+      // 2) Order handmade crafts
+      var catalog = [
+        { name: 'Crochet Keychain',  price: 149,  qty: '#qtyKeychain' },
+        { name: 'Crochet Backpack',  price: 799,  qty: '#qtyBackpack' },
+        { name: 'Handmade Sweater',  price: 1299, qty: '#qtySweater' },
+        { name: 'Crochet Bunny Toy', price: 499,  qty: '#qtyBunny' }
+      ];
+      $('#placeOrderBtn').click(function () {
+        var lines = '', total = 0;
+        $.each(catalog, function (i, item) {
+          var q = parseInt($(item.qty).val(), 10);
+          if (isNaN(q) || q < 0) q = 0;
+          if (q > 0) {
+            var cost = q * item.price;
+            total += cost;
+            lines += '<tr><td>' + item.name + '</td><td>' + q + ' \u00D7 ' + rupees(item.price) + '</td><td>' + rupees(cost) + '</td></tr>';
+          }
+        });
+        if (total === 0) {
+          alert('Enter a quantity for at least one craft.');
+          return;
+        }
+        $('#billLines').html(lines);
+        $('#billTotal').text(rupees(total));
+        $('#billBox').slideDown(300);
+      });
+
+      // 3) Bag workshop
+      var bagColors = ['#f27fb5', '#7f9cf2', '#7bc67e', '#f5b942', '#b08bd9'];
+      var trimColors = ['#1a1a1a', '#e0384c', '#ffffff', '#2b4acb'];
+      var bagIdx = 0, trimIdx = 0, btnSize = 24;
+      var MIN_BTN = 12, MAX_BTN = 48, STEP = 6;
+
+      function applyButtons() {
+        $('.bag-button').animate({ width: btnSize + 'px', height: btnSize + 'px' }, 200);
+      }
+      $('#bagColorBtn').click(function () {
+        bagIdx = (bagIdx + 1) % bagColors.length;
+        $('#bagBody').css('background-color', bagColors[bagIdx]);
+      });
+      $('#bagTrimBtn').click(function () {
+        trimIdx = (trimIdx + 1) % trimColors.length;
+        $('#bagTrim').css('background-color', trimColors[trimIdx]);
+        $('#bagHandle').css('border-color', trimColors[trimIdx] === '#ffffff' ? '#1a1a1a' : trimColors[trimIdx]);
+      });
+      $('#buttonUp').click(function () {
+        btnSize = Math.min(MAX_BTN, btnSize + STEP);
+        applyButtons();
+      });
+      $('#buttonDown').click(function () {
+        btnSize = Math.max(MIN_BTN, btnSize - STEP);
+        applyButtons();
+      });
+      $('#bagReset').click(function () {
+        bagIdx = 0; trimIdx = 0; btnSize = 24;
+        $('#bagBody').css('background-color', bagColors[0]);
+        $('#bagTrim').css('background-color', trimColors[0]);
+        $('#bagHandle').css('border-color', trimColors[0]);
+        applyButtons();
+      });
+
+      // Quick price adder (the sample from the lab sheet)
+      $('#qaBtn').click(function () {
+        var num1 = parseInt($('#qaNum1').val(), 10);
+        var num2 = parseInt($('#qaNum2').val(), 10);
+        if (isNaN(num1) || isNaN(num2)) {
+          $('#qaResult').val('');
+          $('#qaBox').html('Enter both prices as numbers.');
+          return;
+        }
+        var sum = num1 + num2;
+        $('#qaResult').val(sum);
+        $('#qaBox').html('Result: ' + rupees(sum));
+      });
+
+      // Craft tips: tap to hide, button to show again
+      $('#tipList p').click(function () {
+        $(this).slideUp(200);
+      });
+      $('#showTipsAll').click(function () {
+        $('#tipList p').slideDown(200);
+      });
+
+    });
+  }
+</script>
+
+
+</body>
+</html>

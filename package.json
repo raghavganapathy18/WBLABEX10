@@ -1,0 +1,11 @@
+{
+  "name": "node-server-app",
+  "version": "1.0.0",
+  "description": "Ex. 10: basic server-side application using Node.js",
+  "scripts": {
+    "start": "node server.js",
+    "routes": "node server-routes.js",
+    "site": "node server-site.js"
+  },
+  "license": "ISC"
+}

@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Craft.co | A store that is built by hands</title>
+<style>
+  :root{
+    --pink-bg: #fbdff0;
+    --pink-bg-2: #f6d3ea;
+    --ink: #1a1a1a;
+    --white: #ffffff;
+    --border: #1a1a1a;
+    --btn-blue: #aab8ea;
+    --btn-blue-dark: #8fa0e0;
+    --slider-red: #e0384c;
+    --muted: #6b6b6b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--pink-bg);
+    color: var(--ink);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { max-width: 100%; display: block; }
+
+  /* ---------- Header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 40px;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* ---------- Nav dropdown ---------- */
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+  }
+
+  .nav-item > a::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+    margin-top: -4px;
+  }
+
+  .nav-item:hover > a,
+  .nav-item.open > a {
+    color: #c23b7a;
+  }
+
+  .dropdown-menu {
+    display: none;
+    list-style: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    padding: 8px;
+    min-width: 190px;
+    z-index: 30;
+    margin: 0;
+  }
+
+  .nav-item:hover .dropdown-menu,
+  .nav-item.open .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu li a {
+    display: block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu li a:hover {
+    background: var(--pink-bg-2);
+    color: #c23b7a;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    padding: 30px 20px 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .hero h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    margin: 10px 0 0;
+  }
+
+  /* ---------- Product grid ---------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    padding: 20px 40px 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Get Yours Customised ---------- */
+  .customise-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 60px 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .customise-section h2 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    flex: 1 1 300px;
+  }
+
+  table.price-table {
+    border-collapse: collapse;
+    background: var(--pink-bg-2);
+    flex: 1 1 400px;
+    max-width: 480px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  table.price-table th, table.price-table td {
+    border: 1px solid rgba(0,0,0,0.35);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  table.price-table th {
+    font-weight: 700;
+    background: var(--pink-bg-2);
+  }
+
+  .order-like {
+    text-align: center;
+    padding: 30px 20px 10px;
+    font-size: 1.1rem;
+  }
+
+  /* ---------- Form ---------- */
+  .form-wrapper {
+    max-width: 1120px;
+    margin: 20px auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--pink-bg);
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 26px;
+  }
+
+  .field {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field label, fieldset legend, .group-label {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field input[type="date"],
+  .field select {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    background: var(--pink-bg);
+    color: var(--ink);
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .field input::placeholder { color: rgba(0,0,0,0.45); }
+
+  .field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10'%3E%3Cpath d='M1 1l6 7 6-7' stroke='%23000' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+  }
+
+  .file-field {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 8px 8px 8px 8px;
+  }
+
+  .file-field .choose-btn {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 20px;
+    padding: 8px 18px;
+    background: var(--white);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .file-field .file-name {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .checkbox-group, .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    align-items: center;
+  }
+
+  .checkbox-group label, .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--ink);
+  }
+
+  .radio-group input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink);
+  }
+
+  textarea {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 16px;
+    padding: 16px 18px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--pink-bg);
+    resize: vertical;
+    min-height: 130px;
+    width: 100%;
+  }
+
+  .rate-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--slider-red) 0%, var(--slider-red) 50%, #f2c7de 50%, #f2c7de 100%);
+    outline: none;
+  }
+
+  .rate-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .rate-slider::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .submit-btn-wrap {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .submit-btn {
+    background: var(--btn-blue);
+    border: none;
+    padding: 16px 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    background: var(--btn-blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .submit-btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #333;
+    outline-offset: 2px;
+  }
+
+  
+
+  .auth-switch {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 14px;
+    color: var(--muted);
+  }
+
+  .auth-switch a {
+    color: #c23b7a;
+    font-weight: 600;
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .testimonials-wrapper h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 34px;
+  }
+
+  .video-card {
+    max-width: 640px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #333;
+    overflow: hidden;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-thumb .duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .caption {
+    text-align: center;
+    font-weight: 600;
+    margin: 16px 0 26px;
+  }
+
+  .audio-player {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #4a4a4a;
+    border-radius: 30px;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+  }
+
+  .audio-player .play-btn {
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #fff;
+    cursor: pointer;
+  }
+
+  .audio-player .track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .audio-player .track::after {
+    content: "";
+    position: absolute;
+    left: 0; top: -3px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .audio-player .time {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .audio-caption {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  /* ---------- Location ---------- */
+  .location-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 40px;
+    padding: 28px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .location-wrapper h2 {
+    text-align: center;
+    text-transform: lowercase;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 20px;
+  }
+
+  .map-frame {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 24px 40px 40px;
+    font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer p { margin: 2px 0; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-wrapper, .testimonials-wrapper, .location-wrapper { margin-left: 20px; margin-right: 20px; padding: 28px; }
+    header, .customise-section, .product-grid, footer { padding-left: 20px; padding-right: 20px; }
+  }
+
+  @media (max-width: 700px) {
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 68px;
+      right: 20px;
+      left: 20px;
+      background: var(--pink-bg-2);
+      flex-direction: column;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      z-index: 20;
+    }
+    nav ul.open { display: flex; }
+    nav ul li { width: 100%; }
+    nav ul a { display: block; padding: 14px 20px; }
+    .nav-toggle { display: block; }
+    header { position: relative; padding: 20px; }
+
+    .nav-item > a::after { margin-left: auto; margin-top: 0; }
+    .dropdown-menu {
+      display: none;
+      position: static;
+      transform: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: var(--pink-bg);
+      padding: 0 0 0 20px;
+      min-width: 0;
+    }
+    .nav-item.open .dropdown-menu { display: block; }
+    .nav-item:hover .dropdown-menu { display: none; }
+    .nav-item.open:hover .dropdown-menu { display: block; }
+  }
+
+  @media (max-width: 560px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .form-row { gap: 20px; }
+    .form-wrapper { padding: 22px; border-radius: 14px; }
+    .checkbox-group, .radio-group { gap: 16px; }
+    .submit-btn { padding: 14px 44px; width: 100%; }
+    footer { flex-direction: column; align-items: flex-start; }
+    table.price-table th, table.price-table td { padding: 10px 10px; font-size: 0.85rem; }
+  }
+
+  /* ======================================================
+     React app additions
+     ====================================================== */
+  main { min-height: 50vh; }
+  .loading { padding: 80px 20px; text-align: center; color: var(--muted); }
+  .muted { color: var(--muted); font-size: 0.9rem; }
+  .demo-note { color: var(--muted); font-size: 0.8rem; text-align: center; margin: 16px 0 0; }
+
+  /* nav additions */
+  nav a.active { color: #c23b7a; }
+  .logo { display: inline-block; }
+  .link-btn { background: none; border: none; font: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; color: inherit; padding: 6px 2px; }
+  .link-btn:hover { color: #c23b7a; }
+  .link-btn.small-link { font-size: 0.85rem; display: block; margin-top: 4px; }
+  .badge { display: inline-block; margin-left: 6px; min-width: 20px; padding: 0 6px; border-radius: 10px; background: var(--ink); color: var(--white); font-size: 0.75rem; line-height: 20px; text-align: center; }
+  @media (max-width: 700px) {
+    .nav-toggle { margin-left: auto; }
+    nav ul li { list-style: none; }
+    .link-btn { display: block; width: 100%; text-align: left; padding: 14px 20px; }
+  }
+
+  /* buttons */
+  .btn { display: inline-block; padding: 12px 26px; border: none; border-radius: 30px; background: var(--btn-blue); color: var(--ink); font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; text-align: center; transition: background 0.2s ease, transform 0.15s ease; }
+  .btn:hover { background: var(--btn-blue-dark); transform: translateY(-1px); }
+  .btn.ghost { background: var(--white); border: 1px solid var(--ink); }
+  .btn.ghost:hover { background: var(--pink-bg-2); }
+  .btn.small { padding: 9px 18px; font-size: 0.92rem; }
+  .btn.block { width: 100%; margin-top: 20px; }
+  .btn:disabled, .submit-btn:disabled { background: #d4d4de; color: #6b6b6b; cursor: not-allowed; transform: none; }
+  .actions, .center-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px; }
+  .center-actions { margin-bottom: 50px; }
+
+  /* generic page */
+  .page { max-width: 1120px; margin: 0 auto; padding: 10px 40px 50px; }
+  .page-title { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 10px 0 8px; }
+  .page-intro { text-align: center; max-width: 600px; margin: 0 auto 28px; color: var(--muted); line-height: 1.55; }
+  .product-card { display: block; }
+  .plain-fieldset { flex-basis: 100%; border: none; padding: 0; margin: 0; }
+
+  /* forms */
+  .field input[type="password"], .field input[type="number"] {
+    border: 1px solid rgba(0,0,0,0.5); border-radius: 30px; padding: 12px 18px; font-size: 1rem;
+    background: var(--pink-bg); color: var(--ink); width: 100%; font-family: inherit;
+  }
+  .field input[aria-invalid="true"], .field select[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: #b3182e; }
+  .error-text { display: block; color: #b3182e; margin-top: 6px; font-size: 0.88rem; }
+  .success { color: #1f7a3a; font-weight: 700; text-align: center; margin: 18px 0 0; }
+  .auth-switch { text-align: center; font-size: 0.85rem; margin-top: 14px; color: var(--muted); }
+  .auth-switch a { color: #c23b7a; font-weight: 600; }
+  .field input[type="range"] { width: 100%; accent-color: var(--slider-red); }
+  .rate-slider { accent-color: initial; }
+
+  /* cards */
+  .card { max-width: 480px; margin: 20px auto; padding: 28px; background: var(--white); border: 1px solid rgba(0,0,0,0.2); border-radius: 14px; }
+  .card.wide { max-width: 780px; }
+  .card h2 { text-align: center; margin: 0 0 14px; font-size: 1.5rem; font-weight: 800; }
+  .card .field { flex: none; margin-top: 14px; }
+  .card .field input, .card .field select, .card textarea { background: var(--white); }
+  .card .field label { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+
+  /* shop */
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 26px; }
+  .pill { border: 1px solid var(--ink); background: var(--white); border-radius: 30px; padding: 8px 18px; font: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+  .pill:hover { background: var(--pink-bg-2); }
+  .pill.active { background: var(--ink); color: var(--white); }
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px; }
+  .pcard { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+  .pcard-media { aspect-ratio: 1 / 1; background: var(--pink-bg-2); display: flex; align-items: center; justify-content: center; }
+  .pcard-media img { width: 100%; height: 100%; object-fit: cover; }
+  .pcard-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .pcard-body h3 { margin: 0; font-size: 1.05rem; }
+  .pcard-body p { margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); flex: 1; }
+  .pcard-price { font-weight: 800; }
+  .result-count { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 22px; }
+  .frame-art { background: var(--white); border: 10px solid #b07a4a; box-shadow: inset 0 0 0 4px #d9a066; }
+  .frame-art.frame-large { width: 72%; height: 72%; }
+  .frame-art.frame-medium { width: 56%; height: 56%; }
+  .frame-art.frame-small { width: 40%; height: 40%; }
+
+  /* cart */
+  .cart-list { display: flex; flex-direction: column; gap: 12px; }
+  .cart-row { display: grid; grid-template-columns: 72px 1fr auto auto; gap: 14px; align-items: center; background: var(--white); border-radius: 12px; padding: 12px 16px; }
+  .cart-thumb { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: var(--pink-bg-2); }
+  .frame-thumb { border: 7px solid #b07a4a; background: var(--white); }
+  .cart-name { font-weight: 700; }
+  .qty { display: flex; align-items: center; gap: 10px; }
+  .qty button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--ink); background: var(--white); font-size: 1.1rem; cursor: pointer; }
+  .qty button:hover { background: var(--pink-bg-2); }
+  .line-total { text-align: right; min-width: 90px; }
+  .cart-sum { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-top: 20px; padding: 16px 20px; background: var(--pink-bg-2); border-radius: 12px; }
+  .cart-total { font-size: 1.4rem; font-weight: 800; margin-left: 6px; }
+
+  /* login */
+  .login-layout { max-width: 820px; margin: 20px auto; display: grid; grid-template-columns: 1fr 1fr; background: var(--white); border: 1px solid rgba(0,0,0,0.2); border-radius: 14px; overflow: hidden; }
+  .login-panel { background: var(--pink-bg-2); padding: 36px 28px; display: flex; flex-direction: column; justify-content: center; }
+  .login-panel h2 { margin: 0 0 10px; font-size: 1.8rem; font-weight: 800; }
+  .login-panel p { line-height: 1.55; }
+  .login-form { padding: 30px 28px; }
+  .login-form .field { flex: none; margin-top: 14px; }
+  .login-form .field input { background: var(--white); }
+  .login-form .field label { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+
+  /* profile */
+  .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; align-items: start; }
+  .profile-card { background: var(--pink-bg-2); border: 1px solid rgba(0,0,0,0.2); border-radius: 14px; padding: 22px; text-align: center; margin-top: 14px; }
+  .profile-card h3 { margin: 10px 0 4px; font-size: 1.25rem; font-weight: 800; overflow-wrap: anywhere; }
+  .profile-card p { margin: 4px 0; overflow-wrap: anywhere; }
+  .avatar { width: 64px; height: 64px; margin: 0 auto; border-radius: 50%; background: var(--btn-blue); border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3rem; }
+  .level { display: inline-block; margin-top: 10px; padding: 4px 14px; border-radius: 20px; background: var(--ink); color: var(--white); font-size: 0.85rem; font-weight: 600; }
+
+  /* contact */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .two-col .card { margin: 0; max-width: none; }
+  .two-col .location-wrapper { margin: 0; max-width: none; }
+  .two-col .map-frame { height: 360px; }
+
+  /* responsive additions */
+  @media (max-width: 900px) {
+    .page { padding-left: 20px; padding-right: 20px; }
+    .login-layout { max-width: 620px; }
+    .login-panel { padding: 28px 22px; }
+    .login-form { padding: 26px 22px; }
+  }
+  @media (max-width: 800px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .login-layout { grid-template-columns: 1fr; }
+    .login-panel { padding: 22px; }
+    .card { padding: 20px; }
+    .cart-row { grid-template-columns: 64px 1fr; }
+    .cart-thumb { width: 64px; height: 64px; }
+    .cart-row .qty, .cart-row .line-total { grid-column: 2; text-align: left; }
+  }
+
+</style>
+</head>
+<body>
+<div id="root"><p class="loading" id="rxLoading">Loading Craft.co&hellip;</p></div>
+
+<!-- React, React Router and Babel are loaded from CDNs, so open this file with an internet connection -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@remix-run/router@1.15.3/dist/router.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-router@6.22.3/dist/umd/react-router.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.22.3/dist/umd/react-router-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.7/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+(function () {
+  const { useState, useEffect, useReducer, useContext, createContext } = React;
+
+  /* ---- Router: React Router if it loaded, otherwise a small built-in hash router ---- */
+  const ShimRouterLib = (function () {
+    const { createContext, useContext, useState, useEffect } = React;
+
+/* Small hash-based stand-in for react-router-dom.
+   Used only when the real React Router script cannot be loaded. */
+const RouterCtx = createContext({ path: '/' });
+
+function currentPath() {
+  const h = window.location.hash.replace(/^#/, '');
+  return h ? h.split('?')[0] : '/';
+}
+
+function HashRouter({ children }) {
+  const [path, setPath] = useState(currentPath());
+  useEffect(() => {
+    const onHash = () => setPath(currentPath());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  return <RouterCtx.Provider value={{ path }}>{children}</RouterCtx.Provider>;
+}
+const BrowserRouter = HashRouter;
+
+function Routes({ children }) {
+  const { path } = useContext(RouterCtx);
+  let match = null;
+  let fallback = null;
+  React.Children.forEach(children, (child) => {
+    if (!child || !child.props) return;
+    if (child.props.path === '*') fallback = child.props.element;
+    else if (!match && child.props.path === path) match = child.props.element;
+  });
+  return match || fallback;
+}
+
+function Route() { return null; }
+
+function Link({ to, className, children, onClick, ...rest }) {
+  return <a href={'#' + to} className={className} onClick={onClick} {...rest}>{children}</a>;
+}
+
+function NavLink({ to, end, className, children, onClick, ...rest }) {
+  const { path } = useContext(RouterCtx);
+  const isActive = end ? path === to : path === to || path.startsWith(to + '/');
+  const cls = typeof className === 'function' ? className({ isActive }) : className;
+  return (
+    <Link to={to} className={cls} onClick={onClick} aria-current={isActive ? 'page' : undefined} {...rest}>
+      {children}
+    </Link>
+  );
+}
+
+function useNavigate() {
+  return (to) => { window.location.hash = to; };
+}
+
+function useLocation() {
+  return { pathname: useContext(RouterCtx).path };
+}
+
+    return { HashRouter, Routes, Route, Link, NavLink, useNavigate, useLocation };
+  })();
+  const RRD = window.ReactRouterDOM;
+  const RouterLib = (RRD && RRD.HashRouter && RRD.Routes && RRD.Route && RRD.Link && RRD.NavLink && RRD.useNavigate && RRD.useLocation)
+    ? RRD : ShimRouterLib;
+  const { HashRouter, Routes, Route, Link, NavLink, useNavigate, useLocation } = RouterLib;
+
+/* ---- data.js ---- */
+const PRODUCTS = [
+  {
+    id: 'keychain', name: 'Crochet Keychain', price: 149, category: 'keychain',
+    img: 'keychain.jpeg',
+    blurb: 'A tiny crochet charm for your keys or bag.'
+  },
+  {
+    id: 'backpack', name: 'Crochet Backpack', price: 799, category: 'bag',
+    img: 'bag2.jpeg',
+    blurb: 'A roomy backpack, hand crocheted stitch by stitch.'
+  },
+  {
+    id: 'sweater', name: 'Handmade Sweater', price: 1299, category: 'apparel',
+    img: 'top1.jpeg',
+    blurb: 'A warm knitted sweater, made to order in your size.'
+  },
+  {
+    id: 'bunny', name: 'Crochet Bunny Toy', price: 499, category: 'soft-toy',
+    img: 'doll1.jpeg',
+    blurb: 'A soft bunny friend for gifts and cuddles.'
+  },
+  {
+    id: 'frame-large', name: 'Customised Photo Frame Large', price: 599, category: 'photo-frame',
+    art: 'frame-large', blurb: 'Your photo, framed large and personalised.'
+  },
+  {
+    id: 'frame-medium', name: 'Customised Photo Frame Medium', price: 199, category: 'photo-frame',
+    art: 'frame-medium', blurb: 'A medium frame for desks and shelves.'
+  },
+  {
+    id: 'frame-small', name: 'Customised Photo Frame Small', price: 99, category: 'photo-frame',
+    art: 'frame-small', blurb: 'A small frame, a big thought.'
+  }
+];
+
+const CATEGORIES = [
+  ['photo-frame', 'Photo Frame'],
+  ['keychain', 'Keychain'],
+  ['bag', 'Bag'],
+  ['apparel', 'Apparel'],
+  ['soft-toy', 'Soft Toy']
+];
+
+const STATES = ['Tamil Nadu', 'Kerala', 'Karnataka', 'Andhra Pradesh'];
+const GENDERS = ['Male', 'Female', 'Other'];
+const SOURCES = ['TV', 'Magazine', 'Social', 'Friends', 'Others', 'Connection'];
+const PAYMENTS = [
+  ['COD', 'Cash on Delivery'],
+  ['Card', 'Debit / Credit Card'],
+  ['Netbanking', 'Netbanking'],
+  ['UPI', 'UPI']
+];
+const CRAFT_SUGGESTIONS = {
+  'Crochet': 'Crochet Bunny Toy',
+  'Knitting': 'Handmade Sweater',
+  'Photo frames': 'Customised Photo Frame',
+  'Keychains': 'Crochet Keychain',
+  'Bags': 'Crochet Backpack'
+};
+
+function formatPrice(n) {
+  return '\u20B9' + Number(n).toLocaleString('en-IN');
+}
+
+/* ---- validation.js ---- */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PASSWORD_RE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+const NAME_RE = /^[A-Za-z ]+$/;
+
+function todayISO() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function nameError(value) {
+  const v = value.trim();
+  if (!v) return 'Full name is required.';
+  if (!NAME_RE.test(v)) return 'Name can contain only letters and spaces.';
+  return undefined;
+}
+
+function emailError(value) {
+  if (!value) return 'Email address is required.';
+  if (!EMAIL_RE.test(value)) return 'Enter a valid email address, like name@example.com.';
+  return undefined;
+}
+
+function phoneError(value) {
+  if (!value) return 'Mobile number is required.';
+  if (!/^\d{10}$/.test(value)) return 'Enter exactly 10 digits.';
+  return undefined;
+}
+
+/* Registration: every field is required, plus the rules from the lab sheet */
+function validateRegistration(f) {
+  const e = {};
+  const name = nameError(f.name);
+  if (name) e.name = name;
+  const email = emailError(f.email);
+  if (email) e.email = email;
+
+  if (!f.password) e.password = 'Password is required.';
+  else if (!PASSWORD_RE.test(f.password)) e.password = 'Use at least 8 characters with an uppercase letter, a lowercase letter and a number.';
+
+  if (f.age === '') e.age = 'Age is required.';
+  else if (!/^\d+$/.test(f.age)) e.age = 'Enter your age as a whole number.';
+  else if (Number(f.age) < 18 || Number(f.age) > 30) e.age = 'Age must be between 18 and 30.';
+
+  const phone = phoneError(f.mobile);
+  if (phone) e.mobile = phone;
+  if (!f.gender) e.gender = 'Please select a gender.';
+  if (!f.state) e.state = 'Please select a state.';
+  return e;
+}
+
+function validateLogin(f) {
+  const e = {};
+  const email = emailError(f.email);
+  if (email) e.email = email;
+  if (!f.password) e.password = 'Password is required.';
+  return e;
+}
+
+function validateContact(f) {
+  const e = {};
+  const name = nameError(f.name);
+  if (name) e.name = name;
+  const email = emailError(f.email);
+  if (email) e.email = email;
+  if (!f.message.trim()) e.message = 'Please write a message.';
+  return e;
+}
+
+function validateOrder(f) {
+  const e = {};
+  const name = nameError(f.name);
+  if (name) e.name = name;
+  const phone = phoneError(f.phone);
+  if (phone) e.phone = phone;
+  const email = emailError(f.email);
+  if (email) e.email = email;
+  if (!f.category) e.category = 'Please select a category.';
+  if (f.date && f.date < todayISO()) e.date = 'Expected date cannot be in the past.';
+  return e;
+}
+
+/* ---- hooks/useForm.js ---- */
+
+/* Controlled form state with validation, "touched" tracking and reset */
+function useForm(initial, validate) {
+  const [form, setForm] = useState(initial);
+  const [touched, setTouched] = useState({});
+
+  const errors = validate(form);
+  const valid = Object.keys(errors).length === 0;
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
+  const onBlur = (e) => {
+    const name = e.target.name;
+    setTouched((t) => ({ ...t, [name]: true }));
+  };
+  // Show a message once the field was visited or has some content
+  const shown = (name) => {
+    const v = form[name];
+    return touched[name] || (v !== '' && v !== undefined) ? errors[name] : undefined;
+  };
+  const reset = () => {
+    setForm(initial);
+    setTouched({});
+  };
+
+  return { form, setForm, errors, valid, onChange, onBlur, shown, reset };
+}
+
+/* ---- context/AuthContext.jsx ---- */
+
+const AuthContext = createContext(null);
+
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const login = (u) => setUser(u);
+  const logout = () => setUser(null);
+  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+}
+
+function useAuth() {
+  return useContext(AuthContext);
+}
+
+/* ---- context/CartContext.jsx ---- */
+
+
+const CartContext = createContext(null);
+const STORAGE_KEY = 'craftco-cart';
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((i) => i && typeof i.id === 'string' && Number.isInteger(i.qty) && i.qty > 0)
+      : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'add': {
+      const found = state.find((i) => i.id === action.id);
+      return found
+        ? state.map((i) => (i.id === action.id ? { ...i, qty: i.qty + 1 } : i))
+        : [...state, { id: action.id, qty: 1 }];
+    }
+    case 'dec':
+      return state
+        .map((i) => (i.id === action.id ? { ...i, qty: i.qty - 1 } : i))
+        .filter((i) => i.qty > 0);
+    case 'remove':
+      return state.filter((i) => i.id !== action.id);
+    case 'clear':
+      return [];
+    default:
+      return state;
+  }
+}
+
+function CartProvider({ children }) {
+  const [raw, dispatch] = useReducer(reducer, undefined, loadCart);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(raw));
+    } catch (err) {
+      /* storage can be unavailable; the cart still works for this visit */
+    }
+  }, [raw]);
+
+  const items = raw
+    .map((i) => ({ ...i, product: PRODUCTS.find((p) => p.id === i.id) }))
+    .filter((i) => i.product);
+  const count = items.reduce((sum, i) => sum + i.qty, 0);
+  const total = items.reduce((sum, i) => sum + i.qty * i.product.price, 0);
+
+  const value = {
+    items, count, total,
+    add: (id) => dispatch({ type: 'add', id }),
+    dec: (id) => dispatch({ type: 'dec', id }),
+    remove: (id) => dispatch({ type: 'remove', id }),
+    clear: () => dispatch({ type: 'clear' })
+  };
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+
+function useCart() {
+  return useContext(CartContext);
+}
+
+/* ---- components/TextField.jsx ---- */
+function TextField({ label, name, type, value, error, onChange, onBlur, placeholder, inputMode, id }) {
+  const fieldId = id || 'f-' + name;
+  return (
+    <div className="field">
+      <label htmlFor={fieldId}>{label}</label>
+      <input
+        id={fieldId}
+        name={name}
+        type={type || 'text'}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        inputMode={inputMode}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? fieldId + '-err' : undefined}
+      />
+      {error && <small id={fieldId + '-err'} className="error-text">{error}</small>}
+    </div>
+  );
+}
+
+/* ---- components/SelectField.jsx ---- */
+function SelectField({ label, name, value, error, onChange, onBlur, placeholder, options, id }) {
+  const fieldId = id || 'f-' + name;
+  return (
+    <div className="field">
+      <label htmlFor={fieldId}>{label}</label>
+      <select
+        id={fieldId}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? fieldId + '-err' : undefined}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((o) => {
+          const val = Array.isArray(o) ? o[0] : o;
+          const text = Array.isArray(o) ? o[1] : o;
+          return <option key={val} value={val}>{text}</option>;
+        })}
+      </select>
+      {error && <small id={fieldId + '-err'} className="error-text">{error}</small>}
+    </div>
+  );
+}
+
+/* ---- components/NavBar.jsx ---- */
+
+
+
+
+function NavBar() {
+  const [open, setOpen] = useState(false);
+  const [sub, setSub] = useState(false);
+  const { pathname } = useLocation();
+  const { count } = useCart();
+  const { user, logout } = useAuth();
+
+  // Close the mobile menu whenever the page changes
+  useEffect(() => {
+    setOpen(false);
+    setSub(false);
+  }, [pathname]);
+
+  const linkClass = ({ isActive }) => (isActive ? 'active' : undefined);
+  const toggleSub = (e) => {
+    if (window.matchMedia('(max-width: 700px)').matches) {
+      e.preventDefault();
+      setSub((s) => !s);
+    }
+  };
+
+  return (
+    <header>
+      <Link to="/" className="logo">CRAFT.CO</Link>
+      <button
+        type="button"
+        className="nav-toggle"
+        aria-label="Toggle navigation"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        &#9776;
+      </button>
+      <nav>
+        <ul className={open ? 'open' : ''}>
+          <li className={'nav-item' + (sub ? ' open' : '')}>
+            <NavLink to="/" end className={linkClass} onClick={toggleSub}>Home</NavLink>
+            <ul className="dropdown-menu">
+              <li><Link to="/shop">New Arrivals</Link></li>
+              <li><Link to="/shop">Best Sellers</Link></li>
+              <li><Link to="/custom-order">Custom Orders</Link></li>
+              <li><Link to="/about">Gift Sets</Link></li>
+            </ul>
+          </li>
+          <li><NavLink to="/shop" className={linkClass}>Shop</NavLink></li>
+          <li><NavLink to="/custom-order" className={linkClass}>Orders</NavLink></li>
+          <li><NavLink to="/about" className={linkClass}>About</NavLink></li>
+          <li><NavLink to="/contact" className={linkClass}>Contact</NavLink></li>
+          <li>
+            <NavLink to="/cart" className={linkClass}>
+              Cart{count > 0 && <span className="badge" aria-label={count + ' items in cart'}>{count}</span>}
+            </NavLink>
+          </li>
+          {user ? (
+            <>
+              <li><NavLink to="/profile" className={linkClass}>Hi, {user.name.split(' ')[0]}</NavLink></li>
+              <li><button type="button" className="link-btn" onClick={logout}>Log out</button></li>
+            </>
+          ) : (
+            <li><NavLink to="/login" className={linkClass}>Sign In</NavLink></li>
+          )}
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+/* ---- components/Footer.jsx ---- */
+function Footer() {
+  return (
+    <footer>
+      <div>
+        <p><strong>Contact Us</strong></p>
+        <p>Phone &nbsp; +91 97666 54375</p>
+        <p>Email &nbsp; hello@craft.co</p>
+      </div>
+      <div>
+        <p>www.craft.co</p>
+      </div>
+    </footer>
+  );
+}
+
+/* ---- components/ProductCard.jsx ---- */
+
+
+
+function ProductCard({ product }) {
+  const { add } = useCart();
+  const [added, setAdded] = useState(false);
+
+  useEffect(() => {
+    if (!added) return undefined;
+    const t = setTimeout(() => setAdded(false), 1200);
+    return () => clearTimeout(t);
+  }, [added]);
+
+  const handleAdd = () => {
+    add(product.id);
+    setAdded(true);
+  };
+
+  return (
+    <article className="pcard">
+      <div className="pcard-media">
+        {product.img
+          ? <img src={product.img} alt={product.name} />
+          : <div className={'frame-art ' + product.art} role="img" aria-label={product.name}></div>}
+      </div>
+      <div className="pcard-body">
+        <h3>{product.name}</h3>
+        <span className="pcard-price">{formatPrice(product.price)}</span>
+        <p>{product.blurb}</p>
+        <button type="button" className="btn small" onClick={handleAdd}>
+          {added ? 'Added \u2713' : 'Add to Cart'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
+/* ---- components/RegistrationForm.jsx ---- */
+
+
+
+
+
+
+
+
+const EMPTY = { name: '', email: '', password: '', age: '', mobile: '', gender: '', state: '' };
+
+function RegistrationForm() {
+  const f = useForm(EMPTY, validateRegistration);
+  const { login } = useAuth();
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    f.onChange(e);
+    setSubmitted(false);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!f.valid) return;
+    login({ name: f.form.name.trim(), email: f.form.email });
+    setSubmitted(true);
+  };
+  const startOver = () => {
+    f.reset();
+    setSubmitted(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <TextField label="Full name" name="name" value={f.form.name} error={f.shown('name')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Enter your name" />
+      <TextField label="Email address" name="email" type="email" value={f.form.email} error={f.shown('email')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Enter your email" />
+      <TextField label="Password" name="password" type="password" value={f.form.password} error={f.shown('password')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Minimum 8 characters" />
+      <TextField label="Age" name="age" type="number" value={f.form.age} error={f.shown('age')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Enter age (18-30)" />
+      <TextField label="Mobile number" name="mobile" type="tel" inputMode="numeric" value={f.form.mobile} error={f.shown('mobile')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="10-digit mobile number" />
+      <SelectField label="Gender" name="gender" value={f.form.gender} error={f.shown('gender')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Select gender" options={GENDERS} />
+      <SelectField label="State" name="state" value={f.form.state} error={f.shown('state')}
+        onChange={handleChange} onBlur={f.onBlur} placeholder="Select state" options={STATES} />
+
+      <button type="submit" className="btn block" disabled={!f.valid}>Submit Registration</button>
+
+      {submitted && (
+        <div role="status">
+          <p className="success">Welcome to Craft.co, {f.form.name.trim().split(' ')[0]}! Registration completed successfully.</p>
+          <div className="actions">
+            <Link className="btn small" to="/shop">Start shopping</Link>
+            <button type="button" className="btn small ghost" onClick={startOver}>Register another account</button>
+          </div>
+        </div>
+      )}
+      <p className="demo-note">This is a demo. Your details are not sent or stored anywhere.</p>
+    </form>
+  );
+}
+
+/* ---- pages/Home.jsx ---- */
+
+
+function Home() {
+  const featured = PRODUCTS.filter((p) => p.img);
+  const frames = PRODUCTS.filter((p) => p.category === 'photo-frame');
+
+  return (
+    <>
+      <section className="hero">
+        <h1>A Store</h1>
+        <h2>that is built by Hands</h2>
+      </section>
+
+      <section className="product-grid" aria-label="Featured crafts">
+        {featured.map((p) => (
+          <Link key={p.id} to="/shop" className="product-card" aria-label={p.name}>
+            <img src={p.img} alt={p.name} />
+          </Link>
+        ))}
+      </section>
+
+      <section className="customise-section">
+        <h2>Get Yours<br />Customised</h2>
+        <table className="price-table">
+          <thead>
+            <tr><th>Sno</th><th>Product</th><th>Rate</th></tr>
+          </thead>
+          <tbody>
+            {frames.map((p, i) => (
+              <tr key={p.id}><td>{i + 1}</td><td>{p.name}</td><td>{formatPrice(p.price)}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <p className="order-like">Or Order As You Like Below</p>
+      <div className="center-actions">
+        <Link className="btn" to="/custom-order">Start a custom order</Link>
+        <Link className="btn ghost" to="/shop">Browse the shop</Link>
+      </div>
+    </>
+  );
+}
+
+/* ---- pages/Shop.jsx ---- */
+
+
+
+function Shop() {
+  const [filter, setFilter] = useState('all');
+  const visible = filter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === filter);
+
+  return (
+    <div className="page">
+      <h1 className="page-title">Shop</h1>
+      <p className="page-intro">Every piece is made by hand. Add what you like to your cart.</p>
+
+      <div className="filters" role="group" aria-label="Filter by category">
+        <button type="button" className={'pill' + (filter === 'all' ? ' active' : '')} onClick={() => setFilter('all')}>
+          All
+        </button>
+        {CATEGORIES.map(([value, label]) => (
+          <button key={value} type="button"
+            className={'pill' + (filter === value ? ' active' : '')}
+            aria-pressed={filter === value}
+            onClick={() => setFilter(value)}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div className="shop-grid">
+        {visible.map((p) => <ProductCard key={p.id} product={p} />)}
+      </div>
+      <p className="result-count" aria-live="polite">Showing {visible.length} of {PRODUCTS.length} crafts</p>
+    </div>
+  );
+}
+
+/* ---- pages/Cart.jsx ---- */
+
+
+
+
+function Cart() {
+  const { items, total, add, dec, remove, clear } = useCart();
+  const [placed, setPlaced] = useState(false);
+
+  const placeOrder = () => {
+    clear();
+    setPlaced(true);
+  };
+
+  if (placed) {
+    return (
+      <div className="page">
+        <div className="card" role="status">
+          <h2>Thank you!</h2>
+          <p className="success" style={{ marginTop: 0 }}>Your order has been placed.</p>
+          <p className="demo-note">This is a demo, so no real order was created.</p>
+          <div className="actions">
+            <Link className="btn small" to="/shop">Keep shopping</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="page">
+        <h1 className="page-title">Your cart</h1>
+        <p className="page-intro">Your cart is empty. Find something handmade you love.</p>
+        <div className="center-actions">
+          <Link className="btn" to="/shop">Go to the shop</Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="page">
+      <h1 className="page-title">Your cart</h1>
+      <div className="cart-list">
+        {items.map(({ product, qty }) => (
+          <div className="cart-row" key={product.id}>
+            {product.img
+              ? <img className="cart-thumb" src={product.img} alt={product.name} />
+              : <div className="cart-thumb frame-thumb" role="img" aria-label={product.name}></div>}
+            <div>
+              <div className="cart-name">{product.name}</div>
+              <div className="muted">{formatPrice(product.price)} each</div>
+            </div>
+            <div className="qty">
+              <button type="button" aria-label={'Remove one ' + product.name} onClick={() => dec(product.id)}>&minus;</button>
+              <span aria-live="polite">{qty}</span>
+              <button type="button" aria-label={'Add one more ' + product.name} onClick={() => add(product.id)}>+</button>
+            </div>
+            <div className="line-total">
+              <strong>{formatPrice(qty * product.price)}</strong>
+              <button type="button" className="link-btn small-link" onClick={() => remove(product.id)}>Remove</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="cart-sum">
+        <button type="button" className="btn small ghost" onClick={clear}>Clear cart</button>
+        <div>Total <span className="cart-total">{formatPrice(total)}</span></div>
+        <button type="button" className="btn" onClick={placeOrder}>Place Order</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---- pages/CustomOrder.jsx ---- */
+
+
+
+
+
+
+const INITIAL = {
+  name: '', phone: '', email: '', category: '', date: '', file: '',
+  sources: [], payment: 'COD', feedback: '', rate: 5
+};
+
+function CustomOrder() {
+  const f = useForm(INITIAL, validateOrder);
+  const [submitted, setSubmitted] = useState(false);
+  const { form, setForm } = f;
+
+  const change = (e) => { f.onChange(e); setSubmitted(false); };
+  const toggleSource = (value) => {
+    setForm((x) => ({
+      ...x,
+      sources: x.sources.includes(value) ? x.sources.filter((s) => s !== value) : [...x.sources, value]
+    }));
+    setSubmitted(false);
+  };
+  const pickFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    setForm((x) => ({ ...x, file: file ? file.name : '' }));
+  };
+  const submit = (e) => {
+    e.preventDefault();
+    if (f.valid) setSubmitted(true);
+  };
+  const startOver = () => { f.reset(); setSubmitted(false); };
+
+  const percent = ((form.rate - 1) / 9) * 100;
+  const categoryLabel = (CATEGORIES.find((c) => c[0] === form.category) || [])[1];
+
+  return (
+    <div className="page">
+      <h1 className="page-title">Order As You Like</h1>
+      <p className="page-intro">Tell us what you would like made. Share a reference image and an expected date.</p>
+
+      <form className="form-wrapper" onSubmit={submit} noValidate>
+        <div className="form-row">
+          <TextField label="Name" name="name" value={form.name} error={f.shown('name')}
+            onChange={change} onBlur={f.onBlur} />
+          <TextField label="Phone No" name="phone" type="tel" inputMode="numeric" value={form.phone} error={f.shown('phone')}
+            onChange={change} onBlur={f.onBlur} placeholder="10 digits" />
+        </div>
+
+        <div className="form-row">
+          <TextField label="Email" name="email" type="email" value={form.email} error={f.shown('email')}
+            onChange={change} onBlur={f.onBlur} />
+        </div>
+
+        <div className="form-row">
+          <SelectField label="Category" name="category" value={form.category} error={f.shown('category')}
+            onChange={change} onBlur={f.onBlur} placeholder="Select Category" options={CATEGORIES} />
+        </div>
+
+        <div className="form-row">
+          <TextField label="Expected Date" name="date" type="date" value={form.date} error={f.shown('date')}
+            onChange={change} onBlur={f.onBlur} />
+          <div className="field">
+            <label htmlFor="reference-image">Reference Image</label>
+            <div className="file-field">
+              <label className="choose-btn" htmlFor="reference-image">Choose File</label>
+              <span className="file-name">{form.file || 'No file selected'}</span>
+              <input type="file" id="reference-image" name="reference-image" accept="image/*"
+                style={{ display: 'none' }} onChange={pickFile} />
+            </div>
+          </div>
+        </div>
+
+        <div className="form-row">
+          <fieldset className="plain-fieldset">
+            <legend className="group-label">How do you get to know about Craft.co ?</legend>
+            <div className="checkbox-group">
+              {SOURCES.map((s) => (
+                <label key={s}>
+                  <input type="checkbox" checked={form.sources.includes(s)} onChange={() => toggleSource(s)} /> {s}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+
+        <div className="form-row">
+          <fieldset className="plain-fieldset">
+            <legend className="group-label">Mode of Payment</legend>
+            <div className="radio-group">
+              {PAYMENTS.map(([value, label]) => (
+                <label key={value}>
+                  <input type="radio" name="payment" value={value} checked={form.payment === value} onChange={change} /> {label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+
+        <div className="form-row">
+          <div className="field" style={{ flexBasis: '100%' }}>
+            <label htmlFor="feedback">Feedback</label>
+            <textarea id="feedback" name="feedback" value={form.feedback} onChange={change}></textarea>
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="field" style={{ flexBasis: '100%' }}>
+            <label htmlFor="rate">Rate Us: {form.rate} / 10</label>
+            <input type="range" id="rate" name="rate" className="rate-slider" min="1" max="10" value={form.rate}
+              style={{ background: 'linear-gradient(to right, var(--slider-red) 0%, var(--slider-red) ' + percent + '%, #f2c7de ' + percent + '%, #f2c7de 100%)' }}
+              onChange={(e) => { setForm((x) => ({ ...x, rate: Number(e.target.value) })); setSubmitted(false); }} />
+          </div>
+        </div>
+
+        <div className="submit-btn-wrap">
+          <button type="submit" className="submit-btn" disabled={!f.valid}>Submit</button>
+        </div>
+
+        {submitted && (
+          <div role="status">
+            <p className="success">
+              Thank you, {form.name.trim().split(' ')[0]}! We received your {categoryLabel ? categoryLabel.toLowerCase() : 'custom'} order request
+              and will call you on {form.phone}.
+            </p>
+            <div className="actions">
+              <button type="button" className="btn small ghost" onClick={startOver}>Place another request</button>
+            </div>
+          </div>
+        )}
+        <p className="demo-note">This is a demo. Nothing you enter is sent or stored. Dates before {todayISO()} are not accepted.</p>
+      </form>
+    </div>
+  );
+}
+
+/* ---- pages/Register.jsx ---- */
+
+
+function Register() {
+  return (
+    <div className="page">
+      <div className="card">
+        <h2>Create your Craft.co account</h2>
+        <RegistrationForm />
+        <p className="auth-switch">Already a member? <Link to="/login">Sign in</Link></p>
+      </div>
+    </div>
+  );
+}
+
+/* ---- pages/Login.jsx ---- */
+
+
+
+
+
+function Login() {
+  const f = useForm({ email: '', password: '' }, validateLogin);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!f.valid) return;
+    const local = f.form.email.split('@')[0];
+    login({ name: local.charAt(0).toUpperCase() + local.slice(1), email: f.form.email });
+    navigate('/profile');
+  };
+
+  return (
+    <div className="page">
+      <div className="login-layout">
+        <div className="login-panel">
+          <h2>Welcome back</h2>
+          <p>Log in to pick up your custom order where you left off.</p>
+        </div>
+        <form className="login-form" onSubmit={submit} noValidate>
+          <TextField label="Email address" name="email" type="email" value={f.form.email} error={f.shown('email')}
+            onChange={f.onChange} onBlur={f.onBlur} placeholder="Enter your email" />
+          <TextField label="Password" name="password" type="password" value={f.form.password} error={f.shown('password')}
+            onChange={f.onChange} onBlur={f.onBlur} placeholder="Enter your password" />
+          <button type="submit" className="btn block" disabled={!f.valid}>Sign In</button>
+          <p className="auth-switch">New here? <Link to="/register">Create an account</Link></p>
+          <p className="demo-note">Demo login: any valid email and password works.</p>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+/* ---- pages/Profile.jsx ---- */
+
+
+
+
+
+
+function Profile() {
+  const { user } = useAuth();
+  const { count } = useCart();
+  const [p, setP] = useState({
+    name: user ? user.name : 'Priya Sharma',
+    city: 'Chennai',
+    craft: 'Crochet',
+    orders: 3
+  });
+
+  const change = (e) => {
+    const { name, value } = e.target;
+    setP((x) => ({ ...x, [name]: name === 'orders' ? Number(value) : value }));
+  };
+  const initials = p.name.trim().split(/\s+/).filter(Boolean).slice(0, 2)
+    .map((w) => w[0].toUpperCase()).join('') || '?';
+  const level = p.orders >= 10 ? 'Craft champion' : p.orders >= 3 ? 'Regular maker friend' : 'New to Craft.co';
+
+  return (
+    <div className="page">
+      <div className="card wide">
+        <h2>Customer profile</h2>
+        <div className="profile-grid">
+          <div>
+            <TextField label="Name" name="name" value={p.name} onChange={change} placeholder="Your name" />
+            <TextField label="City" name="city" value={p.city} onChange={change} placeholder="Your city" />
+            <SelectField label="Favourite craft" name="craft" value={p.craft} onChange={change}
+              placeholder="Choose a craft" options={Object.keys(CRAFT_SUGGESTIONS)} />
+            <div className="field">
+              <label htmlFor="orders">Orders placed: {p.orders}</label>
+              <input id="orders" name="orders" type="range" min="0" max="20" value={p.orders} onChange={change} />
+            </div>
+          </div>
+          <div className="profile-card" aria-live="polite">
+            <div className="avatar" aria-hidden="true">{initials}</div>
+            <h3>{p.name.trim() || 'Your name'}</h3>
+            <p>{p.city.trim() || 'Your city'}</p>
+            <p>Favourite craft: <strong>{p.craft || 'not chosen yet'}</strong></p>
+            <p>Orders placed: <strong>{p.orders}</strong></p>
+            <p>Items in your cart: <strong>{count}</strong></p>
+            <span className="level">{level}</span>
+            {CRAFT_SUGGESTIONS[p.craft] && <p className="muted">You might like: {CRAFT_SUGGESTIONS[p.craft]}</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- pages/About.jsx ---- */
+
+function About() {
+  return (
+    <div className="page">
+      <h1 className="page-title">About Craft.co</h1>
+      <p className="page-intro">
+        Craft.co is a store that is built by hands. Every crochet keychain, backpack, sweater and bunny toy
+        is made by a person, and photo frames are customised for you.
+      </p>
+      <div className="center-actions" style={{ marginBottom: 36 }}>
+        <Link className="btn" to="/custom-order">Order as you like</Link>
+      </div>
+
+      <section className="testimonials-wrapper" aria-labelledby="testimonials-title">
+        <h2 id="testimonials-title">Testimonials</h2>
+        <div className="video-card">
+          <div className="video-thumb">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&h=440&fit=crop" alt="Video note from customer" />
+            <span className="duration">1:07</span>
+          </div>
+        </div>
+        <p className="caption">Video Note from Customer</p>
+
+        <div className="audio-player">
+          <span className="play-btn"></span>
+          <span className="time">00:00</span>
+          <div className="track"></div>
+          <span className="time">00:00</span>
+        </div>
+        <p className="audio-caption">Audio Note from Customer</p>
+      </section>
+    </div>
+  );
+}
+
+/* ---- pages/Contact.jsx ---- */
+
+
+
+
+function Contact() {
+  const f = useForm({ name: '', email: '', message: '' }, validateContact);
+  const [sent, setSent] = useState(false);
+  const change = (e) => { f.onChange(e); setSent(false); };
+  const submit = (e) => {
+    e.preventDefault();
+    if (f.valid) setSent(true);
+  };
+
+  return (
+    <div className="page">
+      <h1 className="page-title">Contact us</h1>
+      <p className="page-intro">Phone +91 97666 54375 &middot; hello@craft.co</p>
+
+      <div className="two-col">
+        <form className="card" onSubmit={submit} noValidate>
+          <h2>Send a message</h2>
+          <TextField label="Your name" name="name" value={f.form.name} error={f.shown('name')}
+            onChange={change} onBlur={f.onBlur} placeholder="Enter your name" />
+          <TextField label="Email address" name="email" type="email" value={f.form.email} error={f.shown('email')}
+            onChange={change} onBlur={f.onBlur} placeholder="Enter your email" />
+          <div className="field">
+            <label htmlFor="f-message">Message</label>
+            <textarea id="f-message" name="message" value={f.form.message}
+              onChange={change} onBlur={f.onBlur} placeholder="Tell us what you would like made"
+              aria-invalid={f.shown('message') ? 'true' : 'false'}></textarea>
+            {f.shown('message') && <small className="error-text">{f.shown('message')}</small>}
+          </div>
+          <button type="submit" className="btn block" disabled={!f.valid}>Send message</button>
+          {sent && <p className="success" role="status">Thanks, {f.form.name.trim().split(' ')[0]}! We will get back to you soon.</p>}
+          <p className="demo-note">This is a demo. Your message is not sent anywhere.</p>
+        </form>
+
+        <section className="location-wrapper" aria-labelledby="location-title">
+          <h2 id="location-title">location</h2>
+          <div className="map-frame">
+            <iframe
+              src="https://www.google.com/maps?q=San%20Francisco&output=embed"
+              allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+              title="Craft.co location map">
+            </iframe>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+/* ---- pages/NotFound.jsx ---- */
+
+function NotFound() {
+  return (
+    <div className="page">
+      <h1 className="page-title">Page not found</h1>
+      <p className="page-intro">We could not find that page. It may have moved, or the link may be wrong.</p>
+      <div className="center-actions">
+        <Link className="btn" to="/">Back to home</Link>
+      </div>
+    </div>
+  );
+}
+
+/* ---- App.jsx ---- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function App() {
+  return (
+    <>
+      <ScrollToTop />
+      <NavBar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/custom-order" element={<CustomOrder />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <HashRouter>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
+    </HashRouter>
+  );
+})();
+</script>
+<script>
+  // If React or Babel could not load (for example offline), say so instead of showing a blank page
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var el = document.getElementById('rxLoading');
+      if (el) el.textContent = 'The app could not start. Check your internet connection and reload the page.';
+    }, 6000);
+  });
+</script>
+</body>
+</html>
